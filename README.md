@@ -58,7 +58,7 @@ $titleCrawler->crawlContent();
 echo $titleCrawler->getTitle();
 ```
 
-You can create a custom _Crawler_ by implementing the [CrawlerInterface](Crawler/CrawlerInterface.php).
+You can create a custom _Crawler_ by implementing the [CrawlerInterface](./src/Crawler/CrawlerInterface.php).
 
 ### Handling resources
 
