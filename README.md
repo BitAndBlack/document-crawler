@@ -23,11 +23,11 @@ This library is made for the use with [Composer](https://packagist.org/packages/
 
 The *Bit&Black Document Crawler* library provides different crawlers, to extract information of a document. There are currently existing:
 
--   [IconsCrawler](./Crawler/IconsCrawler.php): Crawl and extract all defined icons in a document, that have been declared with `<link rel="icon" ... />`.
--   [ImagesCrawler](./Crawler/ImagesCrawler.php): Crawl and extract all defined images in a document, that have been declared with `<img ... />`.
--   [LanguageCodeCrawler](./Crawler/LanguageCodeCrawler.php): Crawl and extract the language code of a document, that has been declared with `<html lang="...">`.
--   [MetaTagsCrawler](./Crawler/MetaTagsCrawler.php): Crawl and extract all defined meta tags in a document, that have been declared with `<meta ... />`.
--   [TitleCrawler](./Crawler/TitleCrawler.php): Crawl and extract the title of a document, that has been declared with `<title>...</title>`.
+-   [IconsCrawler](./src/Crawler/IconsCrawler.php): Crawl and extract all defined icons in a document, that have been declared with `<link rel="icon" ... />`.
+-   [ImagesCrawler](./src/Crawler/ImagesCrawler.php): Crawl and extract all defined images in a document, that have been declared with `<img ... />`.
+-   [LanguageCodeCrawler](./src/Crawler/LanguageCodeCrawler.php): Crawl and extract the language code of a document, that has been declared with `<html lang="...">`.
+-   [MetaTagsCrawler](./src/Crawler/MetaTagsCrawler.php): Crawl and extract all defined meta tags in a document, that have been declared with `<meta ... />`.
+-   [TitleCrawler](./src/Crawler/TitleCrawler.php): Crawl and extract the title of a document, that has been declared with `<title>...</title>`.
 
 All those crawlers work the same — they need a [Dom Crawler](https://symfony.com/doc/current/components/dom_crawler.html) object, that contains the document:
 
@@ -64,20 +64,20 @@ You can create a custom _Crawler_ by implementing the [CrawlerInterface](Crawler
 
 In same cases, resources are getting crawled, which you may want to handle in a specific way. To achieve this, each crawler makes use of a so-called _Resource Handler_. There are currently existing:
 
--   The [FileSystemDownloadHandler](./ResourceHandler/FileSystemDownloadHandler.php): This one loads resources and writes them to the file system.
+-   The [FileSystemDownloadHandler](./src/ResourceHandler/FileSystemDownloadHandler.php): This one loads resources and writes them to the file system.
     There are different _Downloaders_ available to fetch resources:
 
-    -   The [HttpDiscoveryDownloader](./FileSystemDownloader/HttpDiscoveryDownloader.php) is the default one and makes use of whatever library your project uses to download resources.
-    -   The [ReactDownloader](./FileSystemDownloader/ReactDownloader.php) needs the [`react/http`](https://github.com/reactphp/http) library and fetches resources asynchronously.
-    -   You can — for sure — create a custom _Downloader_ by implementing the [FileSystemDownloaderInterface](./FileSystemDownloader/FileSystemDownloaderInterface.php).
+    -   The [HttpDiscoveryDownloader](./src/FileSystemDownloader/HttpDiscoveryDownloader.php) is the default one and makes use of whatever library your project uses to download resources.
+    -   The [ReactDownloader](./src/FileSystemDownloader/ReactDownloader.php) needs the [`react/http`](https://github.com/reactphp/http) library and fetches resources asynchronously.
+    -   You can — for sure — create a custom _Downloader_ by implementing the [FileSystemDownloaderInterface](./src/FileSystemDownloader/FileSystemDownloaderInterface.php).
 
--   The [PassiveResourceHandler](./ResourceHandler/PassiveResourceHandler.php): This handler does nothing and is the default one.
+-   The [PassiveResourceHandler](./src/ResourceHandler/PassiveResourceHandler.php): This handler does nothing and is the default one.
 
-You can create a custom _Resource Handler_ by implementing the [ResourceHandlerInterface](./ResourceHandler/ResourceHandlerInterface.php).
+You can create a custom _Resource Handler_ by implementing the [ResourceHandlerInterface](./src/ResourceHandler/ResourceHandlerInterface.php).
 
 ### Crawling everything at once
 
-In case you don't want to setup something, there is the [HolisticDocumentCrawler](./HolisticDocumentCrawler.php), that does all the work for you:
+In case you don't want to setup something, there is the [HolisticDocumentCrawler](./src/HolisticDocumentCrawler.php), that does all the work for you:
 
 ```php
 <?php
