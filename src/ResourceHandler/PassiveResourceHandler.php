@@ -11,13 +11,24 @@
 
 namespace BitAndBlack\DocumentCrawler\ResourceHandler;
 
+use BitAndBlack\DocumentCrawler\Util\BaseUrl;
+
 /**
  * The passive resource handler does nothing but to return the original source.
  */
 class PassiveResourceHandler implements ResourceHandlerInterface
 {
-    public function handleResource(string $src, string $baseUri): string|false
+    public function handleResource(string $src, string $baseUrl): string|false
     {
+        $baseUrl = (string) new BaseUrl($baseUrl);
+
+        /**
+         * Change relativ urls to absolute ones.
+         */
+        if (false === str_starts_with($src, 'http') && false === str_starts_with($src, 'data:')) {
+            $src = $baseUrl . '/' . ltrim($src, '/');
+        }
+
         return $src;
     }
 

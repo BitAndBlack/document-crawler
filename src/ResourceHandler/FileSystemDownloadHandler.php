@@ -13,6 +13,7 @@ namespace BitAndBlack\DocumentCrawler\ResourceHandler;
 
 use BitAndBlack\DocumentCrawler\FileSystemDownloader\FileSystemDownloaderInterface;
 use BitAndBlack\DocumentCrawler\FileSystemDownloader\HttpDiscoveryDownloader;
+use BitAndBlack\DocumentCrawler\Util\BaseUrl;
 use BitAndBlack\PathInfo\PathInfo;
 use Throwable;
 
@@ -47,20 +48,19 @@ class FileSystemDownloadHandler implements ResourceHandlerInterface
      * Normalizes the url of a resource, creates a hashed name and downloads it.
      *
      * @param string $src Absolute or relative path to a resource, for example `/build/images/my-file-1.jpg`.
-     * @param string $baseUri The base uri to use along with the resource, for example `https://www.example.org`.
+     * @param string $baseUrl The base uri to use along with the resource, for example `https://www.example.org`.
      *                        The base uri helps to verify, if a resource belongs to the same domain or not.
      * @return string|false The name of the handled resource (can be modified), or `false` on failure.
      */
-    public function handleResource(string $src, string $baseUri): string|false
+    public function handleResource(string $src, string $baseUrl): string|false
     {
-        $scheme = parse_url($baseUri, PHP_URL_SCHEME) ?? 'https';
-        $baseUrl = $scheme . '://' . parse_url($baseUri, PHP_URL_HOST);
+        $baseUrl = (string) new BaseUrl($baseUrl);
 
         /**
          * Change relativ urls to absolute ones.
          */
-        if (!str_starts_with($src, 'http') && !str_starts_with($src, 'data:')) {
-            $src = rtrim($baseUrl, '/') . '/' . ltrim($src, '/');
+        if (false === str_starts_with($src, 'http') && false === str_starts_with($src, 'data:')) {
+            $src = $baseUrl . '/' . ltrim($src, '/');
         }
 
         /**

@@ -15,7 +15,7 @@ use BitAndBlack\DocumentCrawler\ResourceHandler\ResourceHandlerInterface;
 
 class TestResourceHandler implements ResourceHandlerInterface
 {
-    public function handleResource(string $src, string $baseUri): string|false
+    public function handleResource(string $src, string $baseUrl): string|false
     {
         return '__TEST__' . urlencode($src);
     }

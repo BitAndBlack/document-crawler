@@ -22,6 +22,7 @@ use BitAndBlack\DocumentCrawler\DTO\LanguageCode;
 use BitAndBlack\DocumentCrawler\DTO\MetaTag;
 use BitAndBlack\DocumentCrawler\ResourceHandler\PassiveResourceHandler;
 use BitAndBlack\DocumentCrawler\ResourceHandler\ResourceHandlerInterface;
+use BitAndBlack\DocumentCrawler\Util\BaseUrl;
 use Fig\Http\Message\RequestMethodInterface;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
@@ -62,16 +63,21 @@ readonly class HolisticDocumentCrawler
     private LanguageCode|null $languageCode;
 
     /**
-     * @param string $content
-     * @param string|null $url
+     * @param string $document The content of an HTML or XML document.
+     * @param string|null $baseUrl A URL that gets used for every relative URL in the document to make an absolute URL out of it.
+     *                             This URL will be converted to a base URL automatically.
      * @param ResourceHandlerInterface $resourceHandler
      */
     public function __construct(
-        string $content,
-        string|null $url = null,
+        string $document,
+        string|null $baseUrl = null,
         private ResourceHandlerInterface $resourceHandler = new PassiveResourceHandler(),
     ) {
-        $crawler = new Crawler($content, $url);
+        if (null !== $baseUrl) {
+            $baseUrl = (string) new BaseUrl($baseUrl);
+        }
+
+        $crawler = new Crawler($document, $baseUrl);
 
         $iconsCrawler = new IconsCrawler($crawler);
         $iconsCrawler->setResourceHandler($this->resourceHandler);
@@ -103,8 +109,10 @@ readonly class HolisticDocumentCrawler
      *
      * @throws Exception
      */
-    public static function createFromUrl(string $url, ResourceHandlerInterface $resourceHandler = new PassiveResourceHandler()): self
-    {
+    public static function createFromUrl(
+        string $url,
+        ResourceHandlerInterface $resourceHandler = new PassiveResourceHandler(),
+    ): self {
         $requestFactory = Psr17FactoryDiscovery::findRequestFactory();
         $psr18Client = Psr18ClientDiscovery::find();
 

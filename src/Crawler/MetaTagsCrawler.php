@@ -77,6 +77,7 @@ class MetaTagsCrawler implements CrawlerInterface
         $metaTags = array_filter($metaTags);
 
         $metaResourcesToDownload = [
+            'msapplication-config',
             'msapplication-TileImage',
             'og:image',
             'og:image:secure_url',
@@ -92,7 +93,14 @@ class MetaTagsCrawler implements CrawlerInterface
                 continue;
             }
 
-            $isDownloadableResource = in_array($metaTagName, $metaResourcesToDownload, false);
+            $isDownloadableResource = false;
+
+            foreach ($metaResourcesToDownload as $metaResourceToDownload) {
+                if (strtolower($metaResourceToDownload) === strtolower($metaTagName)) {
+                    $isDownloadableResource = true;
+                    break;
+                }
+            }
 
             if ($isDownloadableResource) {
                 $metaTagResourceHandled = $this->resourceHandler->handleResource(

@@ -17,11 +17,11 @@ interface ResourceHandlerInterface
      * Handles an external resource.
      *
      * @param string $src Absolute or relative path to a resource, for example `/build/images/my-file-1.jpg`.
-     * @param string $baseUri The base uri to use along with the resource, for example `https://www.example.org`.
+     * @param string $baseUrl The base uri to use along with the resource, for example `https://www.example.org`.
      *                        The base uri helps to verify, if a resource belongs to the same domain or not.
      * @return string|false The name of the handled resource (can be modified), or `false` on failure.
      */
-    public function handleResource(string $src, string $baseUri): string|false;
+    public function handleResource(string $src, string $baseUrl): string|false;
 
     /**
      * Tells if all given resources have been handled.
