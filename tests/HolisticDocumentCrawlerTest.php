@@ -11,10 +11,10 @@ declare(strict_types=1);
  * @license MIT
  */
 
-namespace BitAndblack\DocumentCrawler\Tests;
+namespace BitAndBlack\DocumentCrawler\Tests;
 
-use BitAndblack\DocumentCrawler\Exception;
-use BitAndblack\DocumentCrawler\HolisticDocumentCrawler;
+use BitAndBlack\DocumentCrawler\Exception;
+use BitAndBlack\DocumentCrawler\HolisticDocumentCrawler;
 use PHPUnit\Framework\TestCase;
 
 final class HolisticDocumentCrawlerTest extends TestCase

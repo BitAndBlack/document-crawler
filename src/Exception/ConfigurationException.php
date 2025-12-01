@@ -9,9 +9,9 @@
  * @license MIT
  */
 
-namespace BitAndblack\DocumentCrawler\Exception;
+namespace BitAndBlack\DocumentCrawler\Exception;
 
-use BitAndblack\DocumentCrawler\Exception;
+use BitAndBlack\DocumentCrawler\Exception;
 
 class ConfigurationException extends Exception
 {

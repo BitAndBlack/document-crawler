@@ -9,10 +9,10 @@
  * @license MIT
  */
 
-namespace BitAndblack\DocumentCrawler\FileSystemDownloader;
+namespace BitAndBlack\DocumentCrawler\FileSystemDownloader;
 
 use BitAndBlack\Composer\Composer;
-use BitAndblack\DocumentCrawler\Exception\MissingDependencyException;
+use BitAndBlack\DocumentCrawler\Exception\MissingDependencyException;
 use Fig\Http\Message\StatusCodeInterface;
 use Psr\Http\Message\ResponseInterface;
 use React\Http\Browser;

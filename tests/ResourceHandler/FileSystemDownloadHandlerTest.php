@@ -11,9 +11,9 @@ declare(strict_types=1);
  * @license MIT
  */
 
-namespace BitAndblack\DocumentCrawler\Tests\ResourceHandler;
+namespace BitAndBlack\DocumentCrawler\Tests\ResourceHandler;
 
-use BitAndblack\DocumentCrawler\ResourceHandler\FileSystemDownloadHandler;
+use BitAndBlack\DocumentCrawler\ResourceHandler\FileSystemDownloadHandler;
 use BitAndBlack\Helpers\FileSystemHelper;
 use PHPUnit\Framework\TestCase;
 

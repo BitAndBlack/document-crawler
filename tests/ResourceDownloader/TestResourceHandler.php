@@ -9,9 +9,9 @@
  * @license MIT
  */
 
-namespace BitAndblack\DocumentCrawler\Tests\ResourceDownloader;
+namespace BitAndBlack\DocumentCrawler\Tests\ResourceDownloader;
 
-use BitAndblack\DocumentCrawler\ResourceHandler\ResourceHandlerInterface;
+use BitAndBlack\DocumentCrawler\ResourceHandler\ResourceHandlerInterface;
 
 class TestResourceHandler implements ResourceHandlerInterface
 {

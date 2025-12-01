@@ -9,7 +9,7 @@
  * @license MIT
  */
 
-namespace BitAndblack\DocumentCrawler\FileSystemDownloader;
+namespace BitAndBlack\DocumentCrawler\FileSystemDownloader;
 
 use Fig\Http\Message\RequestMethodInterface;
 use Fig\Http\Message\StatusCodeInterface;

@@ -9,7 +9,7 @@
  * @license MIT
  */
 
-namespace BitAndblack\DocumentCrawler\DTO;
+namespace BitAndBlack\DocumentCrawler\DTO;
 
 readonly class MetaTag implements DtoInterface
 {

@@ -11,10 +11,10 @@ declare(strict_types=1);
  * @license MIT
  */
 
-namespace BitAndblack\DocumentCrawler\Tests\Crawler;
+namespace BitAndBlack\DocumentCrawler\Tests\Crawler;
 
-use BitAndblack\DocumentCrawler\Crawler\ImagesCrawler;
-use BitAndblack\DocumentCrawler\Tests\ResourceDownloader\TestResourceHandler;
+use BitAndBlack\DocumentCrawler\Crawler\ImagesCrawler;
+use BitAndBlack\DocumentCrawler\Tests\ResourceDownloader\TestResourceHandler;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DomCrawler\Crawler;
 

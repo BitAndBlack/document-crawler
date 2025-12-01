@@ -9,10 +9,10 @@
  * @license MIT
  */
 
-namespace BitAndblack\DocumentCrawler\ResourceHandler;
+namespace BitAndBlack\DocumentCrawler\ResourceHandler;
 
-use BitAndblack\DocumentCrawler\FileSystemDownloader\FileSystemDownloaderInterface;
-use BitAndblack\DocumentCrawler\FileSystemDownloader\HttpDiscoveryDownloader;
+use BitAndBlack\DocumentCrawler\FileSystemDownloader\FileSystemDownloaderInterface;
+use BitAndBlack\DocumentCrawler\FileSystemDownloader\HttpDiscoveryDownloader;
 use BitAndBlack\PathInfo\PathInfo;
 use Throwable;
 

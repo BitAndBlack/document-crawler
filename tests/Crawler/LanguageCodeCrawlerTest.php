@@ -11,9 +11,9 @@ declare(strict_types=1);
  * @license MIT
  */
 
-namespace BitAndblack\DocumentCrawler\Tests\Crawler;
+namespace BitAndBlack\DocumentCrawler\Tests\Crawler;
 
-use BitAndblack\DocumentCrawler\Crawler\LanguageCodeCrawler;
+use BitAndBlack\DocumentCrawler\Crawler\LanguageCodeCrawler;
 use PHPUnit\Framework\TestCase;
 use Places2Be\Locales\LanguageCode;
 use Symfony\Component\DomCrawler\Crawler;

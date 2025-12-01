@@ -9,7 +9,7 @@
  * @license MIT
  */
 
-use BitAndblack\DocumentCrawler\Crawler\TitleCrawler;
+use BitAndBlack\DocumentCrawler\Crawler\TitleCrawler;
 use Symfony\Component\DomCrawler\Crawler;
 
 require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';

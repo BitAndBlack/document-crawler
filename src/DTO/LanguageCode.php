@@ -9,7 +9,7 @@
  * @license MIT
  */
 
-namespace BitAndblack\DocumentCrawler\DTO;
+namespace BitAndBlack\DocumentCrawler\DTO;
 
 class LanguageCode extends \Places2Be\Locales\LanguageCode implements DtoInterface
 {

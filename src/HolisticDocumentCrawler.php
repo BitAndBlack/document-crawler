@@ -9,19 +9,19 @@
  * @license MIT
  */
 
-namespace BitAndblack\DocumentCrawler;
+namespace BitAndBlack\DocumentCrawler;
 
-use BitAndblack\DocumentCrawler\Crawler\IconsCrawler;
-use BitAndblack\DocumentCrawler\Crawler\ImagesCrawler;
-use BitAndblack\DocumentCrawler\Crawler\LanguageCodeCrawler;
-use BitAndblack\DocumentCrawler\Crawler\MetaTagsCrawler;
-use BitAndblack\DocumentCrawler\Crawler\TitleCrawler;
-use BitAndblack\DocumentCrawler\DTO\Icon;
-use BitAndblack\DocumentCrawler\DTO\Image;
-use BitAndblack\DocumentCrawler\DTO\LanguageCode;
-use BitAndblack\DocumentCrawler\DTO\MetaTag;
-use BitAndblack\DocumentCrawler\ResourceHandler\PassiveResourceHandler;
-use BitAndblack\DocumentCrawler\ResourceHandler\ResourceHandlerInterface;
+use BitAndBlack\DocumentCrawler\Crawler\IconsCrawler;
+use BitAndBlack\DocumentCrawler\Crawler\ImagesCrawler;
+use BitAndBlack\DocumentCrawler\Crawler\LanguageCodeCrawler;
+use BitAndBlack\DocumentCrawler\Crawler\MetaTagsCrawler;
+use BitAndBlack\DocumentCrawler\Crawler\TitleCrawler;
+use BitAndBlack\DocumentCrawler\DTO\Icon;
+use BitAndBlack\DocumentCrawler\DTO\Image;
+use BitAndBlack\DocumentCrawler\DTO\LanguageCode;
+use BitAndBlack\DocumentCrawler\DTO\MetaTag;
+use BitAndBlack\DocumentCrawler\ResourceHandler\PassiveResourceHandler;
+use BitAndBlack\DocumentCrawler\ResourceHandler\ResourceHandlerInterface;
 use Fig\Http\Message\RequestMethodInterface;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;

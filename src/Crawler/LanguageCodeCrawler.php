@@ -9,10 +9,10 @@
  * @license MIT
  */
 
-namespace BitAndblack\DocumentCrawler\Crawler;
+namespace BitAndBlack\DocumentCrawler\Crawler;
 
-use BitAndblack\DocumentCrawler\DTO\LanguageCode;
-use BitAndblack\DocumentCrawler\ResourceHandler\ResourceHandlerInterface;
+use BitAndBlack\DocumentCrawler\DTO\LanguageCode;
+use BitAndBlack\DocumentCrawler\ResourceHandler\ResourceHandlerInterface;
 use Places2Be\Locales\Exception;
 use Symfony\Component\DomCrawler\Crawler;
 

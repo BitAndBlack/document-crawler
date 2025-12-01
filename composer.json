@@ -34,12 +34,12 @@
     },
     "autoload": {
         "psr-4": {
-            "BitAndblack\\DocumentCrawler\\": "src/"
+            "BitAndBlack\\DocumentCrawler\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "BitAndblack\\DocumentCrawler\\Tests\\": "tests/"
+            "BitAndBlack\\DocumentCrawler\\Tests\\": "tests/"
         }
     },
     "config": {

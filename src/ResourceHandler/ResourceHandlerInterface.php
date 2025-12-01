@@ -9,7 +9,7 @@
  * @license MIT
  */
 
-namespace BitAndblack\DocumentCrawler\ResourceHandler;
+namespace BitAndBlack\DocumentCrawler\ResourceHandler;
 
 interface ResourceHandlerInterface
 {

@@ -9,7 +9,7 @@
  * @license MIT
  */
 
-namespace BitAndblack\DocumentCrawler;
+namespace BitAndBlack\DocumentCrawler;
 
 use Throwable;
 

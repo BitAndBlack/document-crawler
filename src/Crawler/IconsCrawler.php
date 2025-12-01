@@ -9,11 +9,11 @@
  * @license MIT
  */
 
-namespace BitAndblack\DocumentCrawler\Crawler;
+namespace BitAndBlack\DocumentCrawler\Crawler;
 
-use BitAndblack\DocumentCrawler\DTO\Icon;
-use BitAndblack\DocumentCrawler\ResourceHandler\PassiveResourceHandler;
-use BitAndblack\DocumentCrawler\ResourceHandler\ResourceHandlerInterface;
+use BitAndBlack\DocumentCrawler\DTO\Icon;
+use BitAndBlack\DocumentCrawler\ResourceHandler\PassiveResourceHandler;
+use BitAndBlack\DocumentCrawler\ResourceHandler\ResourceHandlerInterface;
 use Symfony\Component\DomCrawler\Crawler;
 
 /**

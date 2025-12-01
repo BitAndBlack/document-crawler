@@ -9,7 +9,7 @@
  * @license MIT
  */
 
-namespace BitAndblack\DocumentCrawler\ResourceHandler;
+namespace BitAndBlack\DocumentCrawler\ResourceHandler;
 
 /**
  * The passive resource handler does nothing but to return the original source.
