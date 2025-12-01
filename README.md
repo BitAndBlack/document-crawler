@@ -29,7 +29,7 @@ The *Bit&Black Document Crawler* library provides different crawlers, to extract
 -   [MetaTagsCrawler](./src/Crawler/MetaTagsCrawler.php): Crawl and extract all defined meta tags in a document, that have been declared with `<meta ... />`.
 -   [TitleCrawler](./src/Crawler/TitleCrawler.php): Crawl and extract the title of a document, that has been declared with `<title>...</title>`.
 
-All those crawlers work the same — they need a [Dom Crawler](https://symfony.com/doc/current/components/dom_crawler.html) object, that contains the document:
+All those crawlers work the same — they need a [DomCrawler](https://symfony.com/doc/current/components/dom_crawler.html) object, that contains the document:
 
 ```php
 <?php
@@ -77,14 +77,26 @@ You can create a custom _Resource Handler_ by implementing the [ResourceHandlerI
 
 ### Crawling everything at once
 
-In case you don't want to setup something, there is the [HolisticDocumentCrawler](./src/HolisticDocumentCrawler.php), that does all the work for you:
+In case you don't want to set up something, there is the [HolisticDocumentCrawler](./src/HolisticDocumentCrawler.php), that does all the work for you:
 
 ```php
 <?php
 
 use BitAndBlack\DocumentCrawler\HolisticDocumentCrawler;
 
-$holisticDocumentCrawler = new HolisticDocumentCrawler('https://www.bitandblack.com');
+$document = <<<HTML
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>Test</title>
+    </head>
+    <body>
+        <h1>Hello world</h1>
+    </body>
+</html>
+HTML;
+
+$holisticDocumentCrawler = new HolisticDocumentCrawler($document);
 
 // Get all icons:
 $icons = $holisticDocumentCrawler->getIcons();
@@ -100,6 +112,16 @@ $metaTags = $holisticDocumentCrawler->getMetaTags();
 
 // Get the title:
 $title = $holisticDocumentCrawler->getTitle();
+```
+
+The `HolisticDocumentCrawler` can also be initialised using the `createFromUrl` method:
+
+```php
+<?php
+
+use BitAndBlack\DocumentCrawler\HolisticDocumentCrawler;
+
+$holisticDocumentCrawler = HolisticDocumentCrawler::createFromUrl('https://www.bitandblack.com');
 ```
 
 ## Help

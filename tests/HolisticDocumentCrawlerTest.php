@@ -13,18 +13,40 @@ declare(strict_types=1);
 
 namespace BitAndblack\DocumentCrawler\Tests;
 
+use BitAndblack\DocumentCrawler\Exception;
 use BitAndblack\DocumentCrawler\HolisticDocumentCrawler;
 use PHPUnit\Framework\TestCase;
 
 final class HolisticDocumentCrawlerTest extends TestCase
 {
-    public function test__construct(): void
+    public function testInitialiseWithDocument(): void
     {
-        $holisticPageContentCrawler = new HolisticDocumentCrawler('https://www.example.org');
+        $document = <<<'HTML'
+        <!doctype html>
+        <html lang="en">
+            <head>
+                <title>Example Domain</title>
+            </head>
+            <body>
+                <h1>Hello world</h1>
+            </body>
+        </html>
+        HTML;
 
-        self::assertEmpty(
-            $holisticPageContentCrawler->getErrors()
+        $holisticPageContentCrawler = new HolisticDocumentCrawler($document);
+
+        self::assertSame(
+            'Example Domain',
+            $holisticPageContentCrawler->getTitle()
         );
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testInitialiseWithUrl(): void
+    {
+        $holisticPageContentCrawler = HolisticDocumentCrawler::createFromUrl('https://www.example.org');
 
         self::assertSame(
             'Example Domain',

@@ -11,10 +11,12 @@
 
 namespace BitAndblack\DocumentCrawler;
 
+use Throwable;
+
 class Exception extends \Exception
 {
-    public function __construct(string $message)
+    public function __construct(string $message, Throwable|null $previous = null)
     {
-        parent::__construct($message);
+        parent::__construct($message, previous: $previous);
     }
 }

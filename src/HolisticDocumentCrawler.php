@@ -25,8 +25,8 @@ use BitAndblack\DocumentCrawler\ResourceHandler\ResourceHandlerInterface;
 use Fig\Http\Message\RequestMethodInterface;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
+use Psr\Http\Client\ClientExceptionInterface;
 use Symfony\Component\DomCrawler\Crawler;
-use Throwable;
 
 /**
  * This crawler takes a document as a whole and runs
@@ -37,50 +37,40 @@ use Throwable;
  * * the {@see MetaTagsCrawler}
  * * and the {@see TitleCrawler}
  *
+ * Instead of initializing the class with a document, it's also possible to use the
+ * {@see HolisticDocumentCrawler::createFromUrl()} method and use a URL instead.
  */
-class HolisticDocumentCrawler
+readonly class HolisticDocumentCrawler
 {
-    /**
-     * @var array<int, Throwable>
-     */
-    private array $errors = [];
-
     /**
      * @var array<string, array<int, MetaTag>>
      */
-    private array $metaTags = [];
+    private array $metaTags;
 
     /**
      * @var array<int, Icon>
      */
-    private array $icons = [];
+    private array $icons;
 
-    private string|null $title = null;
+    private string|null $title;
 
     /**
      * @var array<int,Image>
      */
-    private array $images = [];
+    private array $images;
 
-    private LanguageCode|null $languageCode = null;
+    private LanguageCode|null $languageCode;
 
+    /**
+     * @param string $content
+     * @param string|null $url
+     * @param ResourceHandlerInterface $resourceHandler
+     */
     public function __construct(
-        string $url,
-        private readonly ResourceHandlerInterface $resourceHandler = new PassiveResourceHandler(),
+        string $content,
+        string|null $url = null,
+        private ResourceHandlerInterface $resourceHandler = new PassiveResourceHandler(),
     ) {
-        try {
-            $requestFactory = Psr17FactoryDiscovery::findRequestFactory();
-            $psr18Client = Psr18ClientDiscovery::find();
-
-            $request = $requestFactory->createRequest(RequestMethodInterface::METHOD_GET, $url);
-            $response = $psr18Client->sendRequest($request);
-
-            $content = $response->getBody()->getContents();
-        } catch (Throwable $throwable) {
-            $this->errors[] = $throwable;
-            return;
-        }
-
         $crawler = new Crawler($content, $url);
 
         $iconsCrawler = new IconsCrawler($crawler);
@@ -105,6 +95,30 @@ class HolisticDocumentCrawler
         $titleCrawler = new TitleCrawler($crawler);
         $titleCrawler->crawlContent();
         $this->title = $titleCrawler->getTitle();
+    }
+
+    /**
+     * Initialise the class with a URL instead of a document.
+     * The content will be fetched at first and then crawled as second.
+     *
+     * @throws Exception
+     */
+    public static function createFromUrl(string $url, ResourceHandlerInterface $resourceHandler = new PassiveResourceHandler()): self
+    {
+        $requestFactory = Psr17FactoryDiscovery::findRequestFactory();
+        $psr18Client = Psr18ClientDiscovery::find();
+
+        $request = $requestFactory->createRequest(RequestMethodInterface::METHOD_GET, $url);
+
+        try {
+            $response = $psr18Client->sendRequest($request);
+        } catch (ClientExceptionInterface $clientException) {
+            throw new Exception('Failed to request URL.', $clientException);
+        }
+
+        $content = $response->getBody()->getContents();
+
+        return new self($content, $url, $resourceHandler);
     }
 
     /**
@@ -137,14 +151,6 @@ class HolisticDocumentCrawler
     public function getImages(): array
     {
         return $this->images;
-    }
-
-    /**
-     * @return array<int, Throwable>
-     */
-    public function getErrors(): array
-    {
-        return $this->errors;
     }
 
     public function getResourceHandler(): ResourceHandlerInterface
