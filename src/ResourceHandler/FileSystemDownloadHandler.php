@@ -45,19 +45,21 @@ class FileSystemDownloadHandler implements ResourceHandlerInterface
     }
 
     /**
-     * Normalizes the url of a resource, creates a hashed name and downloads it.
+     * Normalises the url of a resource, creates a hashed name and downloads it.
      *
      * @param string $src Absolute or relative path to a resource, for example `/build/images/my-file-1.jpg`.
-     * @param string $baseUrl The base uri to use along with the resource, for example `https://www.example.org`.
+     * @param string|null $baseUrl The base uri to use along with the resource, for example `https://www.example.org`.
      *                        The base uri helps to verify, if a resource belongs to the same domain or not.
      * @return string|false The name of the handled resource (can be modified), or `false` on failure.
      */
-    public function handleResource(string $src, string $baseUrl): string|false
+    public function handleResource(string $src, string|null $baseUrl): string|false
     {
-        $baseUrl = (string) new BaseUrl($baseUrl);
+        if (null !== $baseUrl) {
+            $baseUrl = (string) new BaseUrl($baseUrl);
+        }
 
         /**
-         * Change relativ urls to absolute ones.
+         * Change relative urls to absolute ones.
          */
         if (false === str_starts_with($src, 'http') && false === str_starts_with($src, 'data:')) {
             $src = $baseUrl . '/' . ltrim($src, '/');
@@ -71,7 +73,7 @@ class FileSystemDownloadHandler implements ResourceHandlerInterface
         }
 
         $isExternalUrl = str_starts_with($src, 'http')
-            && !str_starts_with($src, $baseUrl)
+            && !str_starts_with($src, (string) $baseUrl)
         ;
 
         /**

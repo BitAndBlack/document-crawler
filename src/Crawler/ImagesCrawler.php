@@ -102,7 +102,7 @@ class ImagesCrawler implements CrawlerInterface
 
             $imageResourceHandled = $this->resourceHandler->handleResource(
                 $imageResource,
-                (string) $this->crawler->getUri()
+                $this->crawler->getUri()
             );
 
             if (false === $imageResourceHandled) {

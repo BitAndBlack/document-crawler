@@ -18,12 +18,14 @@ use BitAndBlack\DocumentCrawler\Util\BaseUrl;
  */
 class PassiveResourceHandler implements ResourceHandlerInterface
 {
-    public function handleResource(string $src, string $baseUrl): string|false
+    public function handleResource(string $src, string|null $baseUrl): string|false
     {
-        $baseUrl = (string) new BaseUrl($baseUrl);
+        if (null !== $baseUrl) {
+            $baseUrl = (string) new BaseUrl($baseUrl);
+        }
 
         /**
-         * Change relativ urls to absolute ones.
+         * Change relative urls to absolute ones.
          */
         if (false === str_starts_with($src, 'http') && false === str_starts_with($src, 'data:')) {
             $src = $baseUrl . '/' . ltrim($src, '/');

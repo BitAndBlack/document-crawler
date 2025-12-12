@@ -105,7 +105,7 @@ class MetaTagsCrawler implements CrawlerInterface
             if ($isDownloadableResource) {
                 $metaTagResourceHandled = $this->resourceHandler->handleResource(
                     $metaTagResource,
-                    (string) $this->crawler->getUri()
+                    $this->crawler->getUri()
                 );
 
                 if (false === $metaTagResourceHandled) {

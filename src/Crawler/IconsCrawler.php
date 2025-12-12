@@ -72,7 +72,7 @@ class IconsCrawler implements CrawlerInterface
 
             $iconResourceHandled = $this->resourceHandler->handleResource(
                 $iconResource,
-                (string) $this->crawler->getUri()
+                $this->crawler->getUri()
             );
 
             if (false === $iconResourceHandled) {
