@@ -54,3 +54,4 @@
 /composer.lock
 /.idea
 /tests/build
+.DS_Store
