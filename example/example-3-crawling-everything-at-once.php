@@ -13,21 +13,8 @@ use BitAndBlack\DocumentCrawler\HolisticDocumentCrawler;
 
 require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
-$document = <<<'HTML'
-<!doctype html>
-<html lang="en">
-    <head>
-        <title>Example Domain</title>
-        <link rel="icon" href="/favicon.ico">
-    </head>
-    <body>
-        <h1>Hello world</h1>
-        <a href="/something.html">S</a>
-    </body>
-</html>
-HTML;
 
-$holisticDocumentCrawler = new HolisticDocumentCrawler($document);
+$holisticDocumentCrawler = HolisticDocumentCrawler::createFromUrl('https://www.bitandblack.com/de/impressum.html');
 
 // Get all icons:
 dump($holisticDocumentCrawler->getIcons());
