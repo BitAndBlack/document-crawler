@@ -17,17 +17,13 @@ class MissingDependencyException extends Exception
 {
     /**
      * @param class-string $classOrigin
-     * @param class-string $classMissing
      * @param string $dependencyMissing
      */
-    public function __construct(
-        string $classOrigin,
-        string $classMissing,
-        string $dependencyMissing,
-    ) {
+    public function __construct(string $classOrigin, string $dependencyMissing)
+    {
         parent::__construct(
-            'Failed to use class "' . $classOrigin . '" as class "' . $classMissing . '" is missing. '
-            . 'Check your Composer dependencies and maybe add the library "' . $dependencyMissing . '" there.'
+            'Failed to use class "' . $classOrigin . '" as external dependencies from library "' . $dependencyMissing . '" are missing. '
+            . 'Check your Composer dependencies and maybe add the library by running `$ composer require ' . $dependencyMissing . '` there.'
         );
     }
 }

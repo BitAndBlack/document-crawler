@@ -9,7 +9,7 @@
  * @license MIT
  */
 
-namespace BitAndBlack\DocumentCrawler\FileSystemDownloader;
+namespace BitAndBlack\DocumentCrawler\DownloadItem;
 
 use Throwable;
 

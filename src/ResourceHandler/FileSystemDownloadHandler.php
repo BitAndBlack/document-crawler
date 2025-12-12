@@ -11,8 +11,8 @@
 
 namespace BitAndBlack\DocumentCrawler\ResourceHandler;
 
-use BitAndBlack\DocumentCrawler\FileSystemDownloader\FileSystemDownloaderInterface;
-use BitAndBlack\DocumentCrawler\FileSystemDownloader\HttpDiscoveryDownloader;
+use BitAndBlack\DocumentCrawler\HttpClient\HttpClientInterface;
+use BitAndBlack\DocumentCrawler\HttpClient\HttpDiscoveryClient;
 use BitAndBlack\DocumentCrawler\Util\BaseUrl;
 use BitAndBlack\PathInfo\PathInfo;
 use Throwable;
@@ -35,12 +35,12 @@ class FileSystemDownloadHandler implements ResourceHandlerInterface
      * @param string|null $cachedResourceFileNamePrefix Additional path that gets prepended to the resource name.
      *                                                  This one is useful, for example if you want to store
      *                                                  the resource in a folder, that is available publicly.
-     * @param FileSystemDownloaderInterface $fileSystemDownloader
+     * @param HttpClientInterface $httpClient
      */
     public function __construct(
         private readonly string $cacheFolderPath,
         private readonly string|null $cachedResourceFileNamePrefix = null,
-        private readonly FileSystemDownloaderInterface $fileSystemDownloader = new HttpDiscoveryDownloader(),
+        private readonly HttpClientInterface $httpClient = new HttpDiscoveryClient(),
     ) {
     }
 
@@ -113,7 +113,7 @@ class FileSystemDownloadHandler implements ResourceHandlerInterface
         if (false === $cacheFileExists) {
             $this->hasHandledAllResources = false;
 
-            $download = $this->fileSystemDownloader->download($src, $cacheFile);
+            $download = $this->httpClient->download($src, $cacheFile);
             $this->errors = $download->getErrors();
             $hasSuccess = $download->hasSuccess();
         }

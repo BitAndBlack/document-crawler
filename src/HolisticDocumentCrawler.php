@@ -20,13 +20,11 @@ use BitAndBlack\DocumentCrawler\DTO\Icon;
 use BitAndBlack\DocumentCrawler\DTO\Image;
 use BitAndBlack\DocumentCrawler\DTO\LanguageCode;
 use BitAndBlack\DocumentCrawler\DTO\MetaTag;
+use BitAndBlack\DocumentCrawler\HttpClient\HttpClientInterface;
+use BitAndBlack\DocumentCrawler\HttpClient\HttpDiscoveryClient;
 use BitAndBlack\DocumentCrawler\ResourceHandler\PassiveResourceHandler;
 use BitAndBlack\DocumentCrawler\ResourceHandler\ResourceHandlerInterface;
 use BitAndBlack\DocumentCrawler\Util\BaseUrl;
-use Fig\Http\Message\RequestMethodInterface;
-use Http\Discovery\Psr17FactoryDiscovery;
-use Http\Discovery\Psr18ClientDiscovery;
-use Psr\Http\Client\ClientExceptionInterface;
 use Symfony\Component\DomCrawler\Crawler;
 
 /**
@@ -112,20 +110,10 @@ readonly class HolisticDocumentCrawler
     public static function createFromUrl(
         string $url,
         ResourceHandlerInterface $resourceHandler = new PassiveResourceHandler(),
+        HttpClientInterface $httpClient = new HttpDiscoveryClient(),
     ): self {
-        $requestFactory = Psr17FactoryDiscovery::findRequestFactory();
-        $psr18Client = Psr18ClientDiscovery::find();
-
-        $request = $requestFactory->createRequest(RequestMethodInterface::METHOD_GET, $url);
-
-        try {
-            $response = $psr18Client->sendRequest($request);
-        } catch (ClientExceptionInterface $clientException) {
-            throw new Exception('Failed to request URL.', $clientException);
-        }
-
+        $response = $httpClient->requestUrl($url);
         $content = $response->getBody()->getContents();
-
         return new self($content, $url, $resourceHandler);
     }
 

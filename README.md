@@ -65,11 +65,11 @@ You can create a custom _Crawler_ by implementing the [CrawlerInterface](./src/C
 In same cases, resources are getting crawled, which you may want to handle in a specific way. To achieve this, each crawler makes use of a so-called _Resource Handler_. There are currently existing:
 
 -   The [FileSystemDownloadHandler](./src/ResourceHandler/FileSystemDownloadHandler.php): This one loads resources and writes them to the file system.
-    There are different _Downloaders_ available to fetch resources:
+    There are different _Http Clients_ available to fetch resources:
 
-    -   The [HttpDiscoveryDownloader](./src/FileSystemDownloader/HttpDiscoveryDownloader.php) is the default one and makes use of whatever library your project uses to download resources.
-    -   The [ReactDownloader](./src/FileSystemDownloader/ReactDownloader.php) needs the [`react/http`](https://github.com/reactphp/http) library and fetches resources asynchronously.
-    -   You can — for sure — create a custom _Downloader_ by implementing the [FileSystemDownloaderInterface](./src/FileSystemDownloader/FileSystemDownloaderInterface.php).
+    -   The [HttpDiscoveryClient](./src/HttpClient/HttpDiscoveryClient.php) is the default one and makes use of whatever library your project uses to download resources.
+    -   The [ReactClient](./src/HttpClient/ReactClient.php) needs the [`react/http`](https://github.com/reactphp/http) library and fetches resources asynchronously.
+    -   You can — for sure — create a custom _Http Client_ by implementing the [HttpClientInterface](./src/HttpClient/HttpClientInterface.php).
 
 -   The [PassiveResourceHandler](./src/ResourceHandler/PassiveResourceHandler.php): This handler does nothing and is the default one.
 
