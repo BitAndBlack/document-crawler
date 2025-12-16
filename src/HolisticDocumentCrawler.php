@@ -41,24 +41,15 @@ use Symfony\Component\DomCrawler\Crawler;
  */
 readonly class HolisticDocumentCrawler
 {
-    /**
-     * @var array<string, array<int, MetaTag>>
-     */
-    private array $metaTags;
+    private IconsCrawler $iconsCrawler;
 
-    /**
-     * @var array<int, Icon>
-     */
-    private array $icons;
+    private ImagesCrawler $imagesCrawler;
 
-    private string|null $title;
+    private LanguageCodeCrawler $languageCodeCrawler;
 
-    /**
-     * @var array<int,Image>
-     */
-    private array $images;
+    private MetaTagsCrawler $metaTagsCrawler;
 
-    private LanguageCode|null $languageCode;
+    private TitleCrawler $titleCrawler;
 
     /**
      * @param string $document The content of an HTML or XML document.
@@ -77,28 +68,23 @@ readonly class HolisticDocumentCrawler
 
         $crawler = new Crawler($document, $baseUrl);
 
-        $iconsCrawler = new IconsCrawler($crawler);
-        $iconsCrawler->setResourceHandler($this->resourceHandler);
-        $iconsCrawler->crawlContent();
-        $this->icons = $iconsCrawler->getIcons();
+        $this->iconsCrawler = new IconsCrawler($crawler);
+        $this->iconsCrawler->setResourceHandler($this->resourceHandler);
+        $this->iconsCrawler->crawlContent();
 
-        $imagesCrawler = new ImagesCrawler($crawler);
-        $imagesCrawler->setResourceHandler($this->resourceHandler);
-        $imagesCrawler->crawlContent();
-        $this->images = $imagesCrawler->getImages();
+        $this->imagesCrawler = new ImagesCrawler($crawler);
+        $this->imagesCrawler->setResourceHandler($this->resourceHandler);
+        $this->imagesCrawler->crawlContent();
 
-        $languageCodeCrawler = new LanguageCodeCrawler($crawler);
-        $languageCodeCrawler->crawlContent();
-        $this->languageCode = $languageCodeCrawler->getLanguageCode();
+        $this->languageCodeCrawler = new LanguageCodeCrawler($crawler);
+        $this->languageCodeCrawler->crawlContent();
 
-        $metaTagsCrawler = new MetaTagsCrawler($crawler);
-        $metaTagsCrawler->setResourceHandler($this->resourceHandler);
-        $metaTagsCrawler->crawlContent();
-        $this->metaTags = $metaTagsCrawler->getMetaTags();
+        $this->metaTagsCrawler = new MetaTagsCrawler($crawler);
+        $this->metaTagsCrawler->setResourceHandler($this->resourceHandler);
+        $this->metaTagsCrawler->crawlContent();
 
-        $titleCrawler = new TitleCrawler($crawler);
-        $titleCrawler->crawlContent();
-        $this->title = $titleCrawler->getTitle();
+        $this->titleCrawler = new TitleCrawler($crawler);
+        $this->titleCrawler->crawlContent();
     }
 
     /**
@@ -117,12 +103,17 @@ readonly class HolisticDocumentCrawler
         return new self($content, $url, $resourceHandler);
     }
 
+    public function getResourceHandler(): ResourceHandlerInterface
+    {
+        return $this->resourceHandler;
+    }
+
     /**
      * @return array<string, array<int, MetaTag>>
      */
     public function getMetaTags(): array
     {
-        return $this->metaTags;
+        return $this->metaTagsCrawler->getMetaTags();
     }
 
     /**
@@ -130,7 +121,7 @@ readonly class HolisticDocumentCrawler
      */
     public function getIcons(): array
     {
-        return $this->icons;
+        return $this->iconsCrawler->getIcons();
     }
 
     /**
@@ -138,7 +129,7 @@ readonly class HolisticDocumentCrawler
      */
     public function getTitle(): string|null
     {
-        return $this->title;
+        return $this->titleCrawler->getTitle();
     }
 
     /**
@@ -146,16 +137,12 @@ readonly class HolisticDocumentCrawler
      */
     public function getImages(): array
     {
-        return $this->images;
+        return $this->imagesCrawler->getImages();
     }
 
-    public function getResourceHandler(): ResourceHandlerInterface
-    {
-        return $this->resourceHandler;
-    }
 
     public function getLanguageCode(): LanguageCode|null
     {
-        return $this->languageCode;
+        return $this->languageCodeCrawler->getLanguageCode();
     }
 }
