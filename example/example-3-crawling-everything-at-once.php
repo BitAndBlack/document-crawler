@@ -30,3 +30,6 @@ dump($holisticDocumentCrawler->getMetaTags());
 
 // Get the title:
 dump($holisticDocumentCrawler->getTitle());
+
+// Get all anchors:
+dump($holisticDocumentCrawler->getAnchors());

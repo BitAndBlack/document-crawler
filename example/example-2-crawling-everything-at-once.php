@@ -22,7 +22,7 @@ $document = <<<'HTML'
     </head>
     <body>
         <h1>Hello world</h1>
-        <a href="/something.html">S</a>
+        <a href="/something.html" title="Click here to move to somewhere else">Something</a>
     </body>
 </html>
 HTML;
@@ -43,3 +43,6 @@ dump($holisticDocumentCrawler->getMetaTags());
 
 // Get the title:
 dump($holisticDocumentCrawler->getTitle());
+
+// Get all anchors:
+dump($holisticDocumentCrawler->getAnchors());

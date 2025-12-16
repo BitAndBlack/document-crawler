@@ -11,11 +11,13 @@
 
 namespace BitAndBlack\DocumentCrawler;
 
+use BitAndBlack\DocumentCrawler\Crawler\AnchorsCrawler;
 use BitAndBlack\DocumentCrawler\Crawler\IconsCrawler;
 use BitAndBlack\DocumentCrawler\Crawler\ImagesCrawler;
 use BitAndBlack\DocumentCrawler\Crawler\LanguageCodeCrawler;
 use BitAndBlack\DocumentCrawler\Crawler\MetaTagsCrawler;
 use BitAndBlack\DocumentCrawler\Crawler\TitleCrawler;
+use BitAndBlack\DocumentCrawler\DTO\Anchor;
 use BitAndBlack\DocumentCrawler\DTO\Icon;
 use BitAndBlack\DocumentCrawler\DTO\Image;
 use BitAndBlack\DocumentCrawler\DTO\LanguageCode;
@@ -51,6 +53,8 @@ readonly class HolisticDocumentCrawler
 
     private TitleCrawler $titleCrawler;
 
+    private AnchorsCrawler $anchorsCrawler;
+
     /**
      * @param string $document The content of an HTML or XML document.
      * @param string|null $baseUrl A URL that gets used for every relative URL in the document to make an absolute URL out of it.
@@ -85,6 +89,9 @@ readonly class HolisticDocumentCrawler
 
         $this->titleCrawler = new TitleCrawler($crawler);
         $this->titleCrawler->crawlContent();
+
+        $this->anchorsCrawler = new AnchorsCrawler($crawler);
+        $this->anchorsCrawler->crawlContent();
     }
 
     /**
@@ -140,9 +147,16 @@ readonly class HolisticDocumentCrawler
         return $this->imagesCrawler->getImages();
     }
 
-
     public function getLanguageCode(): LanguageCode|null
     {
         return $this->languageCodeCrawler->getLanguageCode();
+    }
+
+    /**
+     * @return array<int, Anchor>
+     */
+    public function getAnchors(): array
+    {
+        return $this->anchorsCrawler->getAnchors();
     }
 }

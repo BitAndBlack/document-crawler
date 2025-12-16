@@ -23,11 +23,12 @@ This library is made for the use with [Composer](https://packagist.org/packages/
 
 The *Bit&Black Document Crawler* library provides different crawlers, to extract information of a document. There are currently existing:
 
--   [IconsCrawler](./src/Crawler/IconsCrawler.php): Crawl and extract all defined icons in a document, that have been declared with `<link rel="icon" ... />`.
--   [ImagesCrawler](./src/Crawler/ImagesCrawler.php): Crawl and extract all defined images in a document, that have been declared with `<img ... />`.
--   [LanguageCodeCrawler](./src/Crawler/LanguageCodeCrawler.php): Crawl and extract the language code of a document, that has been declared with `<html lang="...">`.
--   [MetaTagsCrawler](./src/Crawler/MetaTagsCrawler.php): Crawl and extract all defined meta tags in a document, that have been declared with `<meta ... />`.
--   [TitleCrawler](./src/Crawler/TitleCrawler.php): Crawl and extract the title of a document, that has been declared with `<title>...</title>`.
+-   [**AnchorsCrawler**](./src/Crawler/AnchorsCrawler.php): Crawl and extract all defined anchors in a document, that have been declared with `<a href="...">...</a>`.
+-   [**IconsCrawler**](./src/Crawler/IconsCrawler.php): Crawl and extract all defined icons in a document, that have been declared with `<link rel="icon" ... />`.
+-   [**ImagesCrawler**](./src/Crawler/ImagesCrawler.php): Crawl and extract all defined images in a document, that have been declared with `<img ... />`.
+-   [**LanguageCodeCrawler**](./src/Crawler/LanguageCodeCrawler.php): Crawl and extract the language code of a document, that has been declared with `<html lang="...">`.
+-   [**MetaTagsCrawler**](./src/Crawler/MetaTagsCrawler.php): Crawl and extract all defined meta tags in a document, that have been declared with `<meta ... />`.
+-   [**TitleCrawler**](./src/Crawler/TitleCrawler.php): Crawl and extract the title of a document, that has been declared with `<title>...</title>`.
 
 All those crawlers work the same — they need a [DomCrawler](https://symfony.com/doc/current/components/dom_crawler.html) object, that contains the document:
 
