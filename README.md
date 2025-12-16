@@ -99,6 +99,9 @@ HTML;
 
 $holisticDocumentCrawler = new HolisticDocumentCrawler($document);
 
+// Get all anchors:
+$anchors = $holisticDocumentCrawler->getAnchors();
+
 // Get all icons:
 $icons = $holisticDocumentCrawler->getIcons();
 
