@@ -20,7 +20,7 @@
         "psr/http-client": "^1.0",
         "psr/http-client-implementation": "*",
         "psr/http-factory-implementation": "*",
-        "symfony/css-selector": "7.0 || ^8.0",
+        "symfony/css-selector": "^7.0 || ^8.0",
         "symfony/dom-crawler": "^7.0 || ^8.0"
     },
     "require-dev": {
