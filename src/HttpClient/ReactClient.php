@@ -17,10 +17,9 @@ use BitAndBlack\DocumentCrawler\Exception;
 use BitAndBlack\DocumentCrawler\Exception\MissingDependencyException;
 use Fig\Http\Message\StatusCodeInterface;
 use Psr\Http\Message\ResponseInterface;
+use function React\Async\await;
 use React\Http\Browser;
 use Throwable;
-
-use function React\Async\await;
 
 readonly class ReactClient implements HttpClientInterface
 {
