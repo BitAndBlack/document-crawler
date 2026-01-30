@@ -11,6 +11,7 @@
 
 namespace BitAndBlack\DocumentCrawler\ResourceHandler;
 
+use BitAndBlack\DocumentCrawler\Exception;
 use BitAndBlack\DocumentCrawler\HttpClient\HttpClientInterface;
 use BitAndBlack\DocumentCrawler\HttpClient\HttpDiscoveryClient;
 use BitAndBlack\DocumentCrawler\Util\BaseUrl;
@@ -36,12 +37,19 @@ class FileSystemDownloadHandler implements ResourceHandlerInterface
      *                                                  This one is useful, for example if you want to store
      *                                                  the resource in a folder, that is available publicly.
      * @param HttpClientInterface $httpClient
+     * @throws Exception
      */
     public function __construct(
         private readonly string $cacheFolderPath,
         private readonly string|null $cachedResourceFileNamePrefix = null,
         private readonly HttpClientInterface $httpClient = new HttpDiscoveryClient(),
     ) {
+        if (false === is_dir($this->cacheFolderPath)
+            && false === mkdir($this->cacheFolderPath)
+            && false === is_dir($this->cacheFolderPath)
+        ) {
+            throw new Exception('Failed to create directory "' . $this->cacheFolderPath . '".');
+        }
     }
 
     /**
