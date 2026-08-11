@@ -15,12 +15,14 @@ use BitAndBlack\DocumentCrawler\Crawler\AnchorsCrawler;
 use BitAndBlack\DocumentCrawler\Crawler\IconsCrawler;
 use BitAndBlack\DocumentCrawler\Crawler\ImagesCrawler;
 use BitAndBlack\DocumentCrawler\Crawler\LanguageCodeCrawler;
+use BitAndBlack\DocumentCrawler\Crawler\LinkTagsCrawler;
 use BitAndBlack\DocumentCrawler\Crawler\MetaTagsCrawler;
 use BitAndBlack\DocumentCrawler\Crawler\TitleCrawler;
 use BitAndBlack\DocumentCrawler\DTO\Anchor;
 use BitAndBlack\DocumentCrawler\DTO\Icon;
 use BitAndBlack\DocumentCrawler\DTO\Image;
 use BitAndBlack\DocumentCrawler\DTO\LanguageCode;
+use BitAndBlack\DocumentCrawler\DTO\Link;
 use BitAndBlack\DocumentCrawler\DTO\MetaTag;
 use BitAndBlack\DocumentCrawler\HttpClient\HttpClientInterface;
 use BitAndBlack\DocumentCrawler\HttpClient\HttpDiscoveryClient;
@@ -32,6 +34,7 @@ use Symfony\Component\DomCrawler\Crawler;
 /**
  * This crawler takes a document as a whole and runs
  *
+ * * the {@see LinkTagsCrawler}
  * * the {@see IconsCrawler}
  * * the {@see ImagesCrawler}
  * * the {@see LanguageCodeCrawler}
@@ -43,6 +46,8 @@ use Symfony\Component\DomCrawler\Crawler;
  */
 readonly class HolisticDocumentCrawler
 {
+    private LinkTagsCrawler $linkTagsCrawler;
+
     private IconsCrawler $iconsCrawler;
 
     private ImagesCrawler $imagesCrawler;
@@ -71,6 +76,10 @@ readonly class HolisticDocumentCrawler
         }
 
         $crawler = new Crawler($document, $baseUrl);
+
+        $this->linkTagsCrawler = new LinkTagsCrawler($crawler);
+        $this->linkTagsCrawler->setResourceHandler($this->resourceHandler);
+        $this->linkTagsCrawler->crawlContent();
 
         $this->iconsCrawler = new IconsCrawler($crawler);
         $this->iconsCrawler->setResourceHandler($this->resourceHandler);
@@ -158,5 +167,13 @@ readonly class HolisticDocumentCrawler
     public function getAnchors(): array
     {
         return $this->anchorsCrawler->getAnchors();
+    }
+
+    /**
+     * @return list<Link>
+     */
+    public function getLinkTags(): array
+    {
+        return $this->linkTagsCrawler->getLinks();
     }
 }
