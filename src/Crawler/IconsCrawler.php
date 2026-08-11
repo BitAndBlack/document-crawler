@@ -12,6 +12,7 @@
 namespace BitAndBlack\DocumentCrawler\Crawler;
 
 use BitAndBlack\DocumentCrawler\DTO\Icon;
+use BitAndBlack\DocumentCrawler\DTO\Link;
 use BitAndBlack\DocumentCrawler\ResourceHandler\PassiveResourceHandler;
 use BitAndBlack\DocumentCrawler\ResourceHandler\ResourceHandlerInterface;
 use Symfony\Component\DomCrawler\Crawler;
@@ -36,50 +37,20 @@ class IconsCrawler implements CrawlerInterface
 
     public function crawlContent(): void
     {
-        $eachNode = static function (Crawler $node): ?array {
-            $key = $node->attr('rel');
+        $linkTagsCrawler = new LinkTagsCrawler($this->crawler);
+        $linkTagsCrawler->setResourceHandler($this->resourceHandler);
+        $linkTagsCrawler->crawlContent();
+        $links = $linkTagsCrawler->getLinks();
 
-            if (null === $key || !str_contains($key, 'icon')) {
-                return null;
-            }
-
-            return [
-                'name' => $key,
-                'value' => $node->attr('href'),
-            ];
-        };
-
-        /**
-         * @var array<int, array{
-         *     name: string,
-         *     value: string|null,
-         * }|null> $favicons
-         */
-        $favicons = $this->crawler
-            ->filter('head > link')
-            ->each($eachNode)
-        ;
-
-        $favicons = array_filter($favicons);
-
-        foreach ($favicons as $favicon) {
-            $iconName = $favicon['name'];
-            $iconResource = $favicon['value'];
-
-            if (null === $iconResource) {
+        foreach ($links as $link) {
+            if (null === $link->getHref() || false === str_contains($link->getRel(), 'icon')) {
                 continue;
             }
 
-            $iconResourceHandled = $this->resourceHandler->handleResource(
-                $iconResource,
-                $this->crawler->getUri()
+            $this->icons[] = new Icon(
+                $link->getRel(),
+                $link->getHref(),
             );
-
-            if (false === $iconResourceHandled) {
-                continue;
-            }
-
-            $this->icons[] = new Icon($iconName, $iconResourceHandled);
         }
     }
 
