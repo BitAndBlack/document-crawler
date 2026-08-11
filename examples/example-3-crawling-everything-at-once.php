@@ -16,6 +16,9 @@ require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPAR
 
 $holisticDocumentCrawler = HolisticDocumentCrawler::createFromUrl('https://www.bitandblack.com/de/impressum.html');
 
+// Get all links:
+dump($holisticDocumentCrawler->getLinkTags());
+
 // Get all icons:
 dump($holisticDocumentCrawler->getIcons());
 

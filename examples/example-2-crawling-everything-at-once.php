@@ -29,6 +29,9 @@ HTML;
 
 $holisticDocumentCrawler = new HolisticDocumentCrawler($document);
 
+// Get all links:
+dump($holisticDocumentCrawler->getLinkTags());
+
 // Get all icons:
 dump($holisticDocumentCrawler->getIcons());
 
