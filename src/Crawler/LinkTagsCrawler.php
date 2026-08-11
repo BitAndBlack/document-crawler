@@ -17,7 +17,8 @@ use BitAndBlack\DocumentCrawler\ResourceHandler\ResourceHandlerInterface;
 use Symfony\Component\DomCrawler\Crawler;
 
 /**
- * Crawl and extract all defined meta tags in a document, that have been declared with `<meta ... />`.
+ * Crawl and extract all defined link tags in a document, that have been declared with `<link ... />`.
+ * __Please note:__ Currently only links inside the head tag will be crawled.
  */
 class LinkTagsCrawler implements CrawlerInterface
 {

@@ -27,6 +27,7 @@ The *Bit&Black Document Crawler* library provides different crawlers, to extract
 -   [**IconsCrawler**](./src/Crawler/IconsCrawler.php): Crawl and extract all defined icons in a document, that have been declared with `<link rel="icon" ... />`.
 -   [**ImagesCrawler**](./src/Crawler/ImagesCrawler.php): Crawl and extract all defined images in a document, that have been declared with `<img ... />`.
 -   [**LanguageCodeCrawler**](./src/Crawler/LanguageCodeCrawler.php): Crawl and extract the language code of a document, that has been declared with `<html lang="...">`.
+-   [**LinkTagsCrawler**](./src/Crawler/LinkTagsCrawler.php): Crawl and extract all link tags of a document, that have been declared with `<link ... />`.
 -   [**MetaTagsCrawler**](./src/Crawler/MetaTagsCrawler.php): Crawl and extract all defined meta tags in a document, that have been declared with `<meta ... />`.
 -   [**TitleCrawler**](./src/Crawler/TitleCrawler.php): Crawl and extract the title of a document, that has been declared with `<title>...</title>`.
 
