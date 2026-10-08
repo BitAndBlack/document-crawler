@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Bit&Black Document Crawler.
  *
@@ -71,7 +73,7 @@ class LinkTagsCrawler implements CrawlerInterface
          *     integrity: string|null,
          *     media: string|null,
          *     referrerPolicy: string|null,
-         *     rel: string,
+         *     rel: string|null,
          *     sizes: string|null,
          *     target: string|null,
          *     title: string|null,
@@ -84,6 +86,16 @@ class LinkTagsCrawler implements CrawlerInterface
         ;
 
         foreach ($links as $link) {
+            $rel = $link['rel'];
+
+            /**
+             * Skip link tags without a `rel` attribute, because the relationship
+             * to the document is unknown and the tag can't get identified.
+             */
+            if (null === $rel) {
+                continue;
+            }
+
             $href = $link['href'];
 
             if (null !== $href) {
@@ -100,7 +112,7 @@ class LinkTagsCrawler implements CrawlerInterface
             }
 
             $this->links[] = new Link(
-                $link['rel'],
+                $rel,
                 $link['as'],
                 $link['blocking'],
                 $link['crossOrigin'],

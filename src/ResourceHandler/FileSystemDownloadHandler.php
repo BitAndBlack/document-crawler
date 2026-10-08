@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Bit&Black Document Crawler.
  *
@@ -66,9 +68,19 @@ class FileSystemDownloadHandler implements ResourceHandlerInterface
         }
 
         /**
+         * Protocol-relative URLs get the scheme of the base URL.
+         */
+        if (null !== $baseUrl && true === str_starts_with($src, '//')) {
+            $src = (parse_url($baseUrl, PHP_URL_SCHEME) ?? 'https') . ':' . $src;
+        }
+
+        /**
          * Change relative urls to absolute ones.
          */
-        if (false === str_starts_with($src, 'http') && false === str_starts_with($src, 'data:')) {
+        if (false === str_starts_with($src, '//')
+            && false === str_starts_with($src, 'http')
+            && false === str_starts_with($src, 'data:')
+        ) {
             $src = $baseUrl . '/' . ltrim($src, '/');
         }
 
@@ -79,9 +91,17 @@ class FileSystemDownloadHandler implements ResourceHandlerInterface
             return false;
         }
 
-        $isExternalUrl = str_starts_with($src, 'http')
-            && !str_starts_with($src, (string) $baseUrl)
-        ;
+        $isExternalUrl = false;
+
+        if (null !== $baseUrl && true === str_starts_with($src, 'http')) {
+            $srcHost = parse_url($src, PHP_URL_HOST) ?: null;
+            $baseUrlHost = parse_url($baseUrl, PHP_URL_HOST) ?: null;
+
+            $isExternalUrl = null === $srcHost
+                || null === $baseUrlHost
+                || strtolower($srcHost) !== strtolower($baseUrlHost)
+            ;
+        }
 
         /**
          * Decide if external resources should be used.
@@ -107,7 +127,7 @@ class FileSystemDownloadHandler implements ResourceHandlerInterface
         /**
          * Ignore resources without an extension, because they won't load well in Kiwa.
          * (Kiwa appends `.html` when a suffix is missing in a request.)
-         * It could be possible that this behavior will change in the future.
+         * It could be possible that this behaviour will change in the future.
          */
         if (null === $pathInfo->getExtension()) {
             return false;
@@ -121,7 +141,10 @@ class FileSystemDownloadHandler implements ResourceHandlerInterface
             $this->hasHandledAllResources = false;
 
             $download = $this->httpClient->download($src, $cacheFile);
-            $this->errors = $download->getErrors();
+            $this->errors = [
+                ...$this->errors,
+                ...$download->getErrors(),
+            ];
             $hasSuccess = $download->hasSuccess();
         }
 
@@ -157,7 +180,7 @@ class FileSystemDownloadHandler implements ResourceHandlerInterface
      * Defines if external resources should be skipped.
      * This ensures that only relevant resources of the same domain are going to be used.
      * Disabling external resources can lead to problems with websites using CDNs,
-     * so in this case it would better to disable this behavior.
+     * so in this case it would better to disable this behaviour.
      * The default value is `false`.
      */
     public function setSkipExternalResources(bool $skipExternalResources): void
@@ -169,7 +192,7 @@ class FileSystemDownloadHandler implements ResourceHandlerInterface
      * Tells if external resources should be skipped.
      * This ensures that only relevant resources of the same domain are going to be used.
      * Disabling external resources can lead to problems with websites using CDNs,
-     * so in this case it would better to disable this behavior.
+     * so in this case it would better to disable this behaviour.
      * The default value is `false`.
      */
     public function shouldSkipExternalResources(): bool

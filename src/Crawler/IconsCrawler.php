@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Bit&Black Document Crawler.
  *
@@ -44,7 +46,7 @@ class IconsCrawler implements CrawlerInterface
         $links = $linkTagsCrawler->getLinks();
 
         foreach ($links as $link) {
-            if (null === $link->getHref() || false === str_contains($link->getRel(), 'icon')) {
+            if (null === $link->getHref() || false === str_contains(strtolower($link->getRel()), 'icon')) {
                 continue;
             }
 

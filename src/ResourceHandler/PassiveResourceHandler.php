@@ -27,9 +27,23 @@ class PassiveResourceHandler implements ResourceHandlerInterface
         }
 
         /**
+         * Protocol-relative URLs get the scheme of the base URL.
+         */
+        if (true === str_starts_with($src, '//') && null !== $baseUrl) {
+            return (parse_url($baseUrl, PHP_URL_SCHEME) ?? 'https') . ':' . $src;
+        }
+
+        /**
          * Change relative urls to absolute ones.
          */
-        if (false === str_starts_with($src, 'http') && false === str_starts_with($src, 'data:')) {
+        if (false === str_starts_with($src, '//')
+            && false === str_starts_with($src, 'http')
+            && false === str_starts_with($src, 'data:')
+        ) {
+            if (null === $baseUrl) {
+                return $src;
+            }
+
             return $baseUrl . '/' . ltrim($src, '/');
         }
 

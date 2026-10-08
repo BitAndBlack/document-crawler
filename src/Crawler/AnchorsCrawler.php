@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Bit&Black Document Crawler.
  *
@@ -24,7 +26,7 @@ class AnchorsCrawler implements CrawlerInterface
     /**
      * @var array<int, Anchor>
      */
-    private array $anchors;
+    private array $anchors = [];
 
     public function __construct(
         private readonly Crawler $crawler,
@@ -83,7 +85,16 @@ class AnchorsCrawler implements CrawlerInterface
             ->each($eachNode)
         ;
 
-        $this->anchors = array_filter($anchors);
+        /**
+         * Remove null values and reindex.
+         *
+         * @var array<int, Anchor> $anchors
+         */
+        $anchors = array_values(
+            array_filter($anchors)
+        );
+
+        $this->anchors = $anchors;
     }
 
     /**

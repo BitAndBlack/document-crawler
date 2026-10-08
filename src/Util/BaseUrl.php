@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Bit&Black Document Crawler.
  *
@@ -21,8 +23,9 @@ readonly class BaseUrl implements Stringable
     {
         $scheme = parse_url($url, PHP_URL_SCHEME) ?? 'https';
         $host = parse_url($url, PHP_URL_HOST) ?? $url;
+        $port = parse_url($url, PHP_URL_PORT);
 
-        $this->baseUrl = $scheme . '://' . $host;
+        $this->baseUrl = $scheme . '://' . $host . (null !== $port ? ':' . $port : '');
     }
 
     public function __toString(): string

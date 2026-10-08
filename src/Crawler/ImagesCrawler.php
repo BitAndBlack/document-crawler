@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Bit&Black Document Crawler.
  *
@@ -35,10 +37,13 @@ class ImagesCrawler implements CrawlerInterface
      * @var array<int, string>
      */
     private array $knownImageFormats = [
+        'avif',
         'gif',
-        'png',
-        'jpg',
         'jpeg',
+        'jpg',
+        'png',
+        'svg',
+        'webp',
     ];
 
     public function __construct(

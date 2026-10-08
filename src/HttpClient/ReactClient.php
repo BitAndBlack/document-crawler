@@ -77,7 +77,7 @@ readonly class ReactClient implements HttpClientInterface
         $errors = [];
 
         $onFulFilled = function (ResponseInterface $response) use (&$hasSuccess, $cacheFile): void {
-            if ($response->getStatusCode() > StatusCodeInterface::STATUS_BAD_REQUEST) {
+            if ($response->getStatusCode() >= StatusCodeInterface::STATUS_BAD_REQUEST) {
                 $hasSuccess = false;
                 return;
             }

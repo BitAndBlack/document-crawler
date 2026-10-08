@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Bit&Black Document Crawler.
  *
@@ -73,7 +75,7 @@ readonly class HttpDiscoveryClient implements HttpClientInterface
             $hasSuccess = false;
         }
 
-        if ($response instanceof ResponseInterface && $response->getStatusCode() > StatusCodeInterface::STATUS_BAD_REQUEST) {
+        if ($response instanceof ResponseInterface && $response->getStatusCode() >= StatusCodeInterface::STATUS_BAD_REQUEST) {
             $hasSuccess = false;
         }
 
@@ -82,6 +84,12 @@ readonly class HttpDiscoveryClient implements HttpClientInterface
                 $cacheFile,
                 (string) $response->getBody()
             );
+        }
+
+        $hasSuccess = $hasSuccess && file_exists($cacheFile);
+
+        if (false === $hasSuccess && [] === $errors) {
+            $errors[] = new Exception('Failed to download resource.');
         }
 
         return new DownloadItem(
