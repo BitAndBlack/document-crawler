@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Bit&Black Document Crawler.
  *
@@ -20,16 +22,11 @@ interface CrawlerInterface
 
     /**
      * Crawls the given content.
-     *
-     * @return void
      */
     public function crawlContent(): void;
 
     /**
      * Adds a resource handler, that does something with the external resource.
-     *
-     * @param ResourceHandlerInterface $resourceHandler
-     * @return self
      */
     public function setResourceHandler(ResourceHandlerInterface $resourceHandler): self;
 }

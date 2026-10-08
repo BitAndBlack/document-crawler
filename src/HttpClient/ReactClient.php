@@ -26,7 +26,6 @@ readonly class ReactClient implements HttpClientInterface
     private Browser $browser;
 
     /**
-     * @param Browser|null $browser
      * @throws MissingDependencyException
      */
     public function __construct(Browser|null $browser = null)
@@ -51,8 +50,6 @@ readonly class ReactClient implements HttpClientInterface
     /**
      * Requests a URL in a blocking, non-asynchronously way and returns the response.
      *
-     * @param string $url
-     * @return ResponseInterface
      * @throws Exception
      */
     public function requestUrl(string $url): ResponseInterface
@@ -61,8 +58,8 @@ readonly class ReactClient implements HttpClientInterface
 
         try {
             $response = await($promise);
-        } catch (Throwable $error) {
-            throw new Exception('Failed to request URL.', $error);
+        } catch (Throwable $throwable) {
+            throw new Exception('Failed to request URL.', $throwable);
         }
 
         return $response;
@@ -71,10 +68,6 @@ readonly class ReactClient implements HttpClientInterface
     /**
      * Loads an external resource and stores it somewhere in the file system.
      * This may happen asynchronously.
-     *
-     * @param string $src
-     * @param string $cacheFile
-     * @return DownloadItem
      */
     public function download(string $src, string $cacheFile): DownloadItem
     {
@@ -83,7 +76,7 @@ readonly class ReactClient implements HttpClientInterface
         /** @var array<int, Throwable> $errors */
         $errors = [];
 
-        $onFulFilled = function (ResponseInterface $response) use (&$hasSuccess, $cacheFile) {
+        $onFulFilled = function (ResponseInterface $response) use (&$hasSuccess, $cacheFile): void {
             if ($response->getStatusCode() > StatusCodeInterface::STATUS_BAD_REQUEST) {
                 $hasSuccess = false;
                 return;
@@ -95,7 +88,7 @@ readonly class ReactClient implements HttpClientInterface
             );
         };
 
-        $onRejected = function (Throwable $error) use (&$hasSuccess, &$errors) {
+        $onRejected = function (Throwable $error) use (&$hasSuccess, &$errors): void {
             $errors[] = $error;
             $hasSuccess = false;
         };

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Bit&Black Document Crawler.
  *
@@ -17,15 +19,11 @@ interface DownloadItemInterface
 {
     /**
      * Tells the source of a resource, for example `/build/images/my-image-1.jpg`.
-     *
-     * @return string
      */
     public function getSrc(): string;
 
     /**
      * Tells the path of a downloaded resource, for example `/disk/my-image-1-downloaded.jpg`.
-     *
-     * @return string
      */
     public function getFileDownloaded(): string;
 
@@ -38,8 +36,6 @@ interface DownloadItemInterface
 
     /**
      * Tells if the download of the resource was successful.
-     *
-     * @return bool
      */
     public function hasSuccess(): bool;
 }

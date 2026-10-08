@@ -84,7 +84,6 @@ readonly class HolisticDocumentCrawler
      * @param string $document The content of an HTML or XML document.
      * @param string|null $baseUrl A URL that gets used for every relative URL in the document to make an absolute URL out of it.
      *                             This URL will be converted to a base URL automatically.
-     * @param ResourceHandlerInterface $resourceHandler
      */
     public function __construct(
         string $document,
@@ -172,9 +171,6 @@ readonly class HolisticDocumentCrawler
         return $this->iconsCrawler->getIcons();
     }
 
-    /**
-     * @return string|null
-     */
     public function getTitle(): string|null
     {
         return $this->titleCrawler->getTitle();

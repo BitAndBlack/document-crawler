@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Bit&Black Document Crawler.
  *
@@ -15,8 +17,4 @@ use BitAndBlack\DocumentCrawler\Exception;
 
 class ConfigurationException extends Exception
 {
-    public function __construct(string $message)
-    {
-        parent::__construct($message);
-    }
 }

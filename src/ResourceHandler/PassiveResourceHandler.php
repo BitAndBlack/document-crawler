@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Bit&Black Document Crawler.
  *
@@ -28,7 +30,7 @@ class PassiveResourceHandler implements ResourceHandlerInterface
          * Change relative urls to absolute ones.
          */
         if (false === str_starts_with($src, 'http') && false === str_starts_with($src, 'data:')) {
-            $src = $baseUrl . '/' . ltrim($src, '/');
+            return $baseUrl . '/' . ltrim($src, '/');
         }
 
         return $src;

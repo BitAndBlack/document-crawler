@@ -56,10 +56,6 @@ readonly class HttpDiscoveryClient implements HttpClientInterface
     /**
      * Loads an external resource and stores it somewhere in the file system.
      * This may happen asynchronously.
-     *
-     * @param string $src
-     * @param string $cacheFile
-     * @return DownloadItem
      */
     public function download(string $src, string $cacheFile): DownloadItem
     {
@@ -72,16 +68,16 @@ readonly class HttpDiscoveryClient implements HttpClientInterface
 
         try {
             $response = $this->requestUrl($src);
-        } catch (Exception $error) {
-            $errors[] = $error;
+        } catch (Exception $exception) {
+            $errors[] = $exception;
             $hasSuccess = false;
         }
 
-        if (null !== $response && $response->getStatusCode() > StatusCodeInterface::STATUS_BAD_REQUEST) {
+        if ($response instanceof ResponseInterface && $response->getStatusCode() > StatusCodeInterface::STATUS_BAD_REQUEST) {
             $hasSuccess = false;
         }
 
-        if (null !== $response && true === $hasSuccess) {
+        if ($response instanceof ResponseInterface && true === $hasSuccess) {
             $hasSuccess = false !== file_put_contents(
                 $cacheFile,
                 (string) $response->getBody()

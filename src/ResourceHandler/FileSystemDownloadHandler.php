@@ -36,7 +36,6 @@ class FileSystemDownloadHandler implements ResourceHandlerInterface
      * @param string|null $cachedResourceFileNamePrefix Additional path that gets prepended to the resource name.
      *                                                  This one is useful, for example if you want to store
      *                                                  the resource in a folder, that is available publicly.
-     * @param HttpClientInterface $httpClient
      * @throws Exception
      */
     public function __construct(
@@ -131,7 +130,7 @@ class FileSystemDownloadHandler implements ResourceHandlerInterface
         }
 
         if (null !== $this->cachedResourceFileNamePrefix) {
-            $fileName = rtrim($this->cachedResourceFileNamePrefix, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $fileName;
+            return rtrim($this->cachedResourceFileNamePrefix, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $fileName;
         }
 
         return $fileName;
@@ -148,8 +147,6 @@ class FileSystemDownloadHandler implements ResourceHandlerInterface
     /**
      * Tells if all resources have been downloaded.
      * If so, the crawling result can be cached, too.
-     *
-     * @return bool
      */
     public function hasHandledAllResources(): bool
     {
@@ -162,9 +159,6 @@ class FileSystemDownloadHandler implements ResourceHandlerInterface
      * Disabling external resources can lead to problems with websites using CDNs,
      * so in this case it would better to disable this behavior.
      * The default value is `false`.
-     *
-     * @param bool $skipExternalResources
-     * @return void
      */
     public function setSkipExternalResources(bool $skipExternalResources): void
     {
@@ -177,8 +171,6 @@ class FileSystemDownloadHandler implements ResourceHandlerInterface
      * Disabling external resources can lead to problems with websites using CDNs,
      * so in this case it would better to disable this behavior.
      * The default value is `false`.
-     *
-     * @return bool
      */
     public function shouldSkipExternalResources(): bool
     {
@@ -188,8 +180,6 @@ class FileSystemDownloadHandler implements ResourceHandlerInterface
     /**
      * Tells if the resource name should be hashed.
      * This is `false` per default.
-     *
-     * @return bool
      */
     public function isResourceNameHashingEnabled(): bool
     {
@@ -199,9 +189,6 @@ class FileSystemDownloadHandler implements ResourceHandlerInterface
     /**
      * Defines if the resource name should be hashed.
      * This is `false` per default.
-     *
-     * @param bool $resourceNameHashingEnabled
-     * @return $this
      */
     public function setResourceNameHashingEnabled(bool $resourceNameHashingEnabled): self
     {

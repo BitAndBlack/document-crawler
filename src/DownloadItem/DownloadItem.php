@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Bit&Black Document Crawler.
  *
@@ -16,9 +18,6 @@ use Throwable;
 readonly class DownloadItem implements DownloadItemInterface
 {
     /**
-     * @param string $src
-     * @param string $fileDownloaded
-     * @param bool $hasSuccess
      * @param array<int, Throwable> $errors
      */
     public function __construct(

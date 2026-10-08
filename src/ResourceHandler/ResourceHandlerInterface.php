@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Bit&Black Document Crawler.
  *
@@ -25,8 +27,6 @@ interface ResourceHandlerInterface
 
     /**
      * Tells if all given resources have been handled.
-     *
-     * @return bool
      */
     public function hasHandledAllResources(): bool;
 }

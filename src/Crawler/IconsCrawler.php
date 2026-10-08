@@ -40,6 +40,7 @@ class IconsCrawler implements CrawlerInterface
         $linkTagsCrawler = new LinkTagsCrawler($this->crawler);
         $linkTagsCrawler->setResourceHandler($this->resourceHandler);
         $linkTagsCrawler->crawlContent();
+
         $links = $linkTagsCrawler->getLinks();
 
         foreach ($links as $link) {

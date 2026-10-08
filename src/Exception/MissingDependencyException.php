@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Bit&Black Document Crawler.
  *
@@ -17,7 +19,6 @@ class MissingDependencyException extends Exception
 {
     /**
      * @param class-string $classOrigin
-     * @param string $dependencyMissing
      */
     public function __construct(string $classOrigin, string $dependencyMissing)
     {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Bit&Black Document Crawler.
  *
@@ -30,7 +32,6 @@ interface HttpClientInterface
      *
      * @param string $src The source of a resource, for example `/build/images/my-image-1.jpg`.
      * @param string $cacheFile The path of a downloaded resource, for example `/disk/my-image-1-downloaded.jpg`.
-     * @return DownloadItem
      */
     public function download(string $src, string $cacheFile): DownloadItem;
 }
