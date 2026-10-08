@@ -34,6 +34,7 @@ final class LinkTagsCrawlerTest extends TestCase
                 <link rel="alternate" href="https://www.tobiaskoengeter.de" hreflang="de">
                 <link rel="apple-touch-icon" sizes="180x180" href="/build/images/apple-touch-icon.png">
                 <link rel="icon" type="image/png" sizes="32x32" href="/build/images/favicon-32x32.png">
+                <link href="/build/images/unknown-relationship.png">
             </head>
             <body>
                 <h1>Hello world</h1>

@@ -36,6 +36,11 @@ final class BaseUrlTest extends TestCase
             'bitandblack.com',
             'https://bitandblack.com',
         ];
+
+        yield [
+            'https://www.bitandblack.com:8080/en/imprint.html',
+            'https://www.bitandblack.com:8080',
+        ];
     }
 
     #[DataProvider('getGetBaseUrlData')]

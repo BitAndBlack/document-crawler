@@ -104,4 +104,45 @@ final class IconsCrawlerTest extends TestCase
             $icons[4]->getResource()
         );
     }
+
+    public function testCrawlContentMatchesRelCaseInsensitively(): void
+    {
+        $html = <<<'HTML'
+        <!doctype html>
+        <html lang="en">
+            <head>
+                <link rel="ICON" href="/build/images/favicon-upper.png">
+                <link rel="Shortcut Icon" href="/build/images/shortcut.png">
+                <link rel="ALTERNATE" href="https://www.tobiaskoengeter.de" hreflang="de">
+                <title>Test</title>
+            </head>
+            <body>
+                <h1>Hello world</h1>
+            </body>
+        </html>
+        HTML;
+
+        $crawler = new Crawler($html);
+
+        $iconsCrawler = new IconsCrawler($crawler);
+        $iconsCrawler->setResourceHandler(new TestResourceHandler());
+        $iconsCrawler->crawlContent();
+
+        $icons = $iconsCrawler->getIcons();
+
+        self::assertCount(
+            2,
+            $icons
+        );
+
+        self::assertEquals(
+            'ICON',
+            $icons[0]->getName()
+        );
+
+        self::assertEquals(
+            'Shortcut Icon',
+            $icons[1]->getName()
+        );
+    }
 }

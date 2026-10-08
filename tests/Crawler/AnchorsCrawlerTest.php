@@ -118,6 +118,60 @@ final class AnchorsCrawlerTest extends TestCase
         );
     }
 
+    public function testAnchorsWithoutHrefGetSkippedAndTheResultStaysAList(): void
+    {
+        $html = <<<'HTML'
+        <!doctype html>
+        <html lang="en">
+            <head>
+                <title>Test</title>
+            </head>
+            <body>
+                <h1>Hello world</h1>
+                <a href="https://www.example.org/first-page">First page</a>
+                <a name="legacy-bookmark"></a>
+                <a href="https://www.example.org/second-page">Second page</a>
+                <a></a>
+                <a href="https://www.example.org/third-page">Third page</a>
+            </body>
+        </html>
+        HTML;
+
+        $crawler = new Crawler($html);
+
+        $anchorsCrawler = new AnchorsCrawler($crawler);
+        $anchorsCrawler->crawlContent();
+
+        $anchors = $anchorsCrawler->getAnchors();
+
+        self::assertCount(
+            3,
+            $anchors
+        );
+
+        self::assertSame(
+            [0, 1, 2],
+            array_keys($anchors)
+        );
+
+        self::assertStringStartsWith(
+            '[',
+            (string) json_encode($anchors)
+        );
+    }
+
+    public function testGetAnchorsBeforeCrawlReturnsEmptyArray(): void
+    {
+        $crawler = new Crawler('<html lang="en"><head><title>Test</title></head><body></body></html>');
+
+        $anchorsCrawler = new AnchorsCrawler($crawler);
+
+        self::assertSame(
+            [],
+            $anchorsCrawler->getAnchors()
+        );
+    }
+
     public function testAnchorKeepsBackwardsCompatibleConstruction(): void
     {
         $anchor = new Anchor(

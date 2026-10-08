@@ -15,6 +15,8 @@ namespace BitAndBlack\DocumentCrawler\Tests;
 
 use BitAndBlack\DocumentCrawler\Exception;
 use BitAndBlack\DocumentCrawler\HolisticDocumentCrawler;
+use BitAndBlack\DocumentCrawler\ResourceHandler\PassiveResourceHandler;
+use BitAndBlack\DocumentCrawler\Tests\HttpClient\TestHttpClient;
 use PHPUnit\Framework\TestCase;
 
 final class HolisticDocumentCrawlerTest extends TestCase
@@ -144,7 +146,11 @@ final class HolisticDocumentCrawlerTest extends TestCase
      */
     public function testInitialiseWithUrl(): void
     {
-        $holisticPageContentCrawler = HolisticDocumentCrawler::createFromUrl('https://www.example.org');
+        $holisticPageContentCrawler = HolisticDocumentCrawler::createFromUrl(
+            'https://www.example.org',
+            new PassiveResourceHandler(),
+            new TestHttpClient(),
+        );
 
         self::assertSame(
             'Example Domain',

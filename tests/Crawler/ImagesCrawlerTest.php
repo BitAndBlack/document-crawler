@@ -139,6 +139,59 @@ final class ImagesCrawlerTest extends TestCase
         );
     }
 
+    public function testCrawlContentSupportsModernImageFormats(): void
+    {
+        $html = <<<'HTML'
+        <!doctype html>
+        <html lang="en">
+            <head>
+                <meta charset="utf-8">
+                <title>Test</title>
+            </head>
+            <body>
+                <h1>Hello world</h1>
+                <img src="/build/images/photo.webp">
+                <img src="/build/images/hero.avif">
+                <img src="/build/images/logo.svg">
+                <img src="/build/images/animation.gif">
+            </body>
+        </html>
+        HTML;
+
+        $crawler = new Crawler($html);
+
+        $imagesCrawler = new ImagesCrawler($crawler);
+        $imagesCrawler->setResourceHandler(new TestResourceHandler());
+        $imagesCrawler->crawlContent();
+
+        $images = $imagesCrawler->getImages();
+
+        self::assertCount(
+            4,
+            $images
+        );
+
+        self::assertSame(
+            '__TEST__%2Fbuild%2Fimages%2Fphoto.webp',
+            $images[0]->getResource()
+        );
+
+        self::assertSame(
+            '__TEST__%2Fbuild%2Fimages%2Fhero.avif',
+            $images[1]->getResource()
+        );
+
+        self::assertSame(
+            '__TEST__%2Fbuild%2Fimages%2Flogo.svg',
+            $images[2]->getResource()
+        );
+
+        self::assertSame(
+            '__TEST__%2Fbuild%2Fimages%2Fanimation.gif',
+            $images[3]->getResource()
+        );
+    }
+
     public function testImageKeepsBackwardsCompatibleConstruction(): void
     {
         $image = new Image(
