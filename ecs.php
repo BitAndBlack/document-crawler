@@ -1,6 +1,8 @@
 <?php
 
+use PhpCsFixer\Fixer\ClassNotation\OrderedTypesFixer;
 use PhpCsFixer\Fixer\ControlStructure\YodaStyleFixer;
+use PhpCsFixer\Fixer\LanguageConstruct\NullableTypeDeclarationFixer;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
 use Symplify\EasyCodingStandard\ValueObject\Set\SetList;
 
@@ -22,5 +24,12 @@ return ECSConfig::configure()
     ])
     ->withConfiguredRule(YodaStyleFixer::class, [
         'always_move_variable' => true,
+    ])
+    ->withConfiguredRule(NullableTypeDeclarationFixer::class, [
+        'syntax' => 'union',
+    ])
+    ->withConfiguredRule(OrderedTypesFixer::class, [
+        'null_adjustment' => 'always_last',
+        'sort_algorithm' => 'none',
     ])
 ;

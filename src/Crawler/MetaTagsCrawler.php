@@ -36,7 +36,7 @@ class MetaTagsCrawler implements CrawlerInterface
 
     public function crawlContent(): void
     {
-        $eachNode = static function (Crawler $node): ?array {
+        $eachNode = static function (Crawler $node): array|null {
             $key = $node->attr('property')
                 ?? $node->attr('name')
             ;

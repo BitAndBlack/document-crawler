@@ -21,7 +21,7 @@ use Symfony\Component\DomCrawler\Crawler;
  */
 class LanguageCodeCrawler implements CrawlerInterface
 {
-    private ?LanguageCode $languageCode = null;
+    private LanguageCode|null $languageCode = null;
 
     public function __construct(
         private readonly Crawler $crawler,
@@ -48,7 +48,7 @@ class LanguageCodeCrawler implements CrawlerInterface
         $this->languageCode = $languageCode;
     }
 
-    public function getLanguageCode(): ?LanguageCode
+    public function getLanguageCode(): LanguageCode|null
     {
         return $this->languageCode;
     }

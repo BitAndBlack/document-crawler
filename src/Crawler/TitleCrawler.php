@@ -19,7 +19,7 @@ use Symfony\Component\DomCrawler\Crawler;
  */
 class TitleCrawler implements CrawlerInterface
 {
-    private ?string $title = null;
+    private string|null $title = null;
 
     public function __construct(
         private readonly Crawler $crawler,
@@ -41,7 +41,7 @@ class TitleCrawler implements CrawlerInterface
         }
     }
 
-    public function getTitle(): ?string
+    public function getTitle(): string|null
     {
         return $this->title;
     }
