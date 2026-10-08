@@ -63,10 +63,17 @@ class AnchorsCrawler implements CrawlerInterface
                 $text = null;
             }
 
+            $rel = $node->attr('rel');
+
+            if (true === empty($rel)) {
+                $rel = null;
+            }
+
             return new Anchor(
-                $href,
-                $text,
-                $title
+                href: $href,
+                text: $text,
+                title: $title,
+                rel: $rel,
             );
         };
 

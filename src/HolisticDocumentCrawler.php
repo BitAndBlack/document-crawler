@@ -12,18 +12,25 @@
 namespace BitAndBlack\DocumentCrawler;
 
 use BitAndBlack\DocumentCrawler\Crawler\AnchorsCrawler;
+use BitAndBlack\DocumentCrawler\Crawler\CanonicalCrawler;
+use BitAndBlack\DocumentCrawler\Crawler\HeadingsCrawler;
 use BitAndBlack\DocumentCrawler\Crawler\IconsCrawler;
+use BitAndBlack\DocumentCrawler\Crawler\IframesCrawler;
 use BitAndBlack\DocumentCrawler\Crawler\ImagesCrawler;
 use BitAndBlack\DocumentCrawler\Crawler\LanguageCodeCrawler;
 use BitAndBlack\DocumentCrawler\Crawler\LinkTagsCrawler;
 use BitAndBlack\DocumentCrawler\Crawler\MetaTagsCrawler;
+use BitAndBlack\DocumentCrawler\Crawler\StructuredDataCrawler;
 use BitAndBlack\DocumentCrawler\Crawler\TitleCrawler;
 use BitAndBlack\DocumentCrawler\DTO\Anchor;
+use BitAndBlack\DocumentCrawler\DTO\Heading;
 use BitAndBlack\DocumentCrawler\DTO\Icon;
+use BitAndBlack\DocumentCrawler\DTO\Iframe;
 use BitAndBlack\DocumentCrawler\DTO\Image;
 use BitAndBlack\DocumentCrawler\DTO\LanguageCode;
 use BitAndBlack\DocumentCrawler\DTO\Link;
 use BitAndBlack\DocumentCrawler\DTO\MetaTag;
+use BitAndBlack\DocumentCrawler\DTO\StructuredData;
 use BitAndBlack\DocumentCrawler\HttpClient\HttpClientInterface;
 use BitAndBlack\DocumentCrawler\HttpClient\HttpDiscoveryClient;
 use BitAndBlack\DocumentCrawler\ResourceHandler\PassiveResourceHandler;
@@ -39,7 +46,12 @@ use Symfony\Component\DomCrawler\Crawler;
  * * the {@see ImagesCrawler}
  * * the {@see LanguageCodeCrawler}
  * * the {@see MetaTagsCrawler}
- * * and the {@see TitleCrawler}
+ * * the {@see TitleCrawler}
+ * * the {@see AnchorsCrawler}
+ * * the {@see CanonicalCrawler}
+ * * the {@see StructuredDataCrawler}
+ * * the {@see HeadingsCrawler}
+ * * and the {@see IframesCrawler}
  *
  * Instead of initializing the class with a document, it's also possible to use the
  * {@see HolisticDocumentCrawler::createFromUrl()} method and use a URL instead.
@@ -59,6 +71,14 @@ readonly class HolisticDocumentCrawler
     private TitleCrawler $titleCrawler;
 
     private AnchorsCrawler $anchorsCrawler;
+
+    private CanonicalCrawler $canonicalCrawler;
+
+    private StructuredDataCrawler $structuredDataCrawler;
+
+    private HeadingsCrawler $headingsCrawler;
+
+    private IframesCrawler $iframesCrawler;
 
     /**
      * @param string $document The content of an HTML or XML document.
@@ -101,6 +121,18 @@ readonly class HolisticDocumentCrawler
 
         $this->anchorsCrawler = new AnchorsCrawler($crawler);
         $this->anchorsCrawler->crawlContent();
+
+        $this->canonicalCrawler = new CanonicalCrawler($crawler);
+        $this->canonicalCrawler->crawlContent();
+
+        $this->structuredDataCrawler = new StructuredDataCrawler($crawler);
+        $this->structuredDataCrawler->crawlContent();
+
+        $this->headingsCrawler = new HeadingsCrawler($crawler);
+        $this->headingsCrawler->crawlContent();
+
+        $this->iframesCrawler = new IframesCrawler($crawler);
+        $this->iframesCrawler->crawlContent();
     }
 
     /**
@@ -167,6 +199,35 @@ readonly class HolisticDocumentCrawler
     public function getAnchors(): array
     {
         return $this->anchorsCrawler->getAnchors();
+    }
+
+    public function getCanonicalUrl(): string|null
+    {
+        return $this->canonicalCrawler->getCanonicalUrl();
+    }
+
+    /**
+     * @return array<int, StructuredData>
+     */
+    public function getStructuredData(): array
+    {
+        return $this->structuredDataCrawler->getStructuredData();
+    }
+
+    /**
+     * @return array<int, Heading>
+     */
+    public function getHeadings(): array
+    {
+        return $this->headingsCrawler->getHeadings();
+    }
+
+    /**
+     * @return array<int, Iframe>
+     */
+    public function getIframes(): array
+    {
+        return $this->iframesCrawler->getIframes();
     }
 
     /**

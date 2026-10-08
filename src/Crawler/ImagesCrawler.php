@@ -68,10 +68,38 @@ class ImagesCrawler implements CrawlerInterface
                 $title = null;
             }
 
+            $loading = $node->attr('loading');
+
+            if ('' === $loading) {
+                $loading = null;
+            }
+
+            $width = $node->attr('width');
+
+            if ('' === $width) {
+                $width = null;
+            }
+
+            $height = $node->attr('height');
+
+            if ('' === $height) {
+                $height = null;
+            }
+
+            $srcset = $node->attr('srcset');
+
+            if ('' === $srcset) {
+                $srcset = null;
+            }
+
             return new Image(
                 resource: $src,
                 alt: $alt,
                 title: $title,
+                loading: $loading,
+                width: $width,
+                height: $height,
+                srcset: $srcset,
             );
         };
 
@@ -110,9 +138,13 @@ class ImagesCrawler implements CrawlerInterface
             }
 
             $this->images[] = new Image(
-                $imageResourceHandled,
-                $image->getAlt(),
-                $image->getTitle(),
+                resource: $imageResourceHandled,
+                alt: $image->getAlt(),
+                title: $image->getTitle(),
+                loading: $image->getLoading(),
+                width: $image->getWidth(),
+                height: $image->getHeight(),
+                srcset: $image->getSrcset(),
             );
 
             ++$imageCounter;

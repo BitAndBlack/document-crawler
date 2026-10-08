@@ -36,3 +36,15 @@ dump($holisticDocumentCrawler->getTitle());
 
 // Get all anchors:
 dump($holisticDocumentCrawler->getAnchors());
+
+// Get the canonical URL:
+dump($holisticDocumentCrawler->getCanonicalUrl());
+
+// Get all headings:
+dump($holisticDocumentCrawler->getHeadings());
+
+// Get all iframes:
+dump($holisticDocumentCrawler->getIframes());
+
+// Get all structured data blocks:
+dump($holisticDocumentCrawler->getStructuredData());

@@ -24,11 +24,15 @@ This library is made for the use with [Composer](https://packagist.org/packages/
 The *Bit&Black Document Crawler* library provides different crawlers, to extract information of a document. There are currently existing:
 
 -   [**AnchorsCrawler**](./src/Crawler/AnchorsCrawler.php): Crawl and extract all defined anchors in a document, that have been declared with `<a href="...">...</a>`.
+-   [**CanonicalCrawler**](./src/Crawler/CanonicalCrawler.php): Crawl and extract the canonical URL of a document, that has been declared with `<link rel="canonical" href="..." />`.
+-   [**HeadingsCrawler**](./src/Crawler/HeadingsCrawler.php): Crawl and extract all headings in a document, that have been declared with `<h1>...</h1>` up to `<h6>...</h6>`.
 -   [**IconsCrawler**](./src/Crawler/IconsCrawler.php): Crawl and extract all defined icons in a document, that have been declared with `<link rel="icon" ... />`.
+-   [**IframesCrawler**](./src/Crawler/IframesCrawler.php): Crawl and extract all defined iframes in a document, that have been declared with `<iframe ...></iframe>`.
 -   [**ImagesCrawler**](./src/Crawler/ImagesCrawler.php): Crawl and extract all defined images in a document, that have been declared with `<img ... />`.
 -   [**LanguageCodeCrawler**](./src/Crawler/LanguageCodeCrawler.php): Crawl and extract the language code of a document, that has been declared with `<html lang="...">`.
 -   [**LinkTagsCrawler**](./src/Crawler/LinkTagsCrawler.php): Crawl and extract all link tags of a document, that have been declared with `<link ... />`.
 -   [**MetaTagsCrawler**](./src/Crawler/MetaTagsCrawler.php): Crawl and extract all defined meta tags in a document, that have been declared with `<meta ... />`.
+-   [**StructuredDataCrawler**](./src/Crawler/StructuredDataCrawler.php): Crawl and extract all structured data blocks in a document, that have been declared with `<script type="application/ld+json">...</script>`.
 -   [**TitleCrawler**](./src/Crawler/TitleCrawler.php): Crawl and extract the title of a document, that has been declared with `<title>...</title>`.
 
 All those crawlers work the same — they need a [DomCrawler](https://symfony.com/doc/current/components/dom_crawler.html) object, that contains the document:
@@ -103,8 +107,17 @@ $holisticDocumentCrawler = new HolisticDocumentCrawler($document);
 // Get all anchors:
 $anchors = $holisticDocumentCrawler->getAnchors();
 
+// Get the canonical URL:
+$canonicalUrl = $holisticDocumentCrawler->getCanonicalUrl();
+
+// Get all headings:
+$headings = $holisticDocumentCrawler->getHeadings();
+
 // Get all icons:
 $icons = $holisticDocumentCrawler->getIcons();
+
+// Get all iframes:
+$iframes = $holisticDocumentCrawler->getIframes();
 
 // Get all images:
 $images = $holisticDocumentCrawler->getImages();
@@ -112,8 +125,14 @@ $images = $holisticDocumentCrawler->getImages();
 // Get the language code:
 $languageCode = $holisticDocumentCrawler->getLanguageCode();
 
+// Get all link tags:
+$linkTags = $holisticDocumentCrawler->getLinkTags();
+
 // Get all meta tags:
 $metaTags = $holisticDocumentCrawler->getMetaTags();
+
+// Get all structured data blocks:
+$structuredData = $holisticDocumentCrawler->getStructuredData();
 
 // Get the title:
 $title = $holisticDocumentCrawler->getTitle();

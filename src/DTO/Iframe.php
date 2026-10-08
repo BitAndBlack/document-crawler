@@ -11,66 +11,47 @@
 
 namespace BitAndBlack\DocumentCrawler\DTO;
 
-readonly class Image implements DtoInterface
+readonly class Iframe implements DtoInterface
 {
     public function __construct(
-        private string $resource,
-        private string|null $alt,
+        private string $src,
         private string|null $title,
-        private string|null $loading = null,
-        private string|null $width = null,
-        private string|null $height = null,
-        private string|null $srcset = null,
+        private string|null $width,
+        private string|null $height,
     ) {
     }
 
     public function __toString(): string
     {
-        return $this->getResource();
+        return $this->getSrc();
     }
 
     /**
      * @return array{
-     *     resource: string,
-     *     alt: string|null,
+     *     src: string,
      *     title: string|null,
-     *     loading: string|null,
      *     width: string|null,
      *     height: string|null,
-     *     srcset: string|null,
      * }
      */
     public function jsonSerialize(): array
     {
         return [
-            'resource' => $this->getResource(),
-            'alt' => $this->getAlt(),
+            'src' => $this->getSrc(),
             'title' => $this->getTitle(),
-            'loading' => $this->getLoading(),
             'width' => $this->getWidth(),
             'height' => $this->getHeight(),
-            'srcset' => $this->getSrcset(),
         ];
     }
 
-    public function getResource(): string
+    public function getSrc(): string
     {
-        return $this->resource;
-    }
-
-    public function getAlt(): string|null
-    {
-        return $this->alt;
+        return $this->src;
     }
 
     public function getTitle(): string|null
     {
         return $this->title;
-    }
-
-    public function getLoading(): string|null
-    {
-        return $this->loading;
     }
 
     public function getWidth(): string|null
@@ -81,10 +62,5 @@ readonly class Image implements DtoInterface
     public function getHeight(): string|null
     {
         return $this->height;
-    }
-
-    public function getSrcset(): string|null
-    {
-        return $this->srcset;
     }
 }

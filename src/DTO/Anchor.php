@@ -17,6 +17,7 @@ readonly class Anchor implements DtoInterface
         private string $href,
         private string|null $text,
         private string|null $title,
+        private string|null $rel = null,
     ) {
     }
 
@@ -30,6 +31,7 @@ readonly class Anchor implements DtoInterface
      *     href: string,
      *     text: string|null,
      *     title: string|null,
+     *     rel: string|null,
      * }
      */
     public function jsonSerialize(): array
@@ -38,6 +40,7 @@ readonly class Anchor implements DtoInterface
             'href' => $this->getHref(),
             'text' => $this->getText(),
             'title' => $this->getTitle(),
+            'rel' => $this->getRel(),
         ];
     }
 
@@ -54,5 +57,10 @@ readonly class Anchor implements DtoInterface
     public function getTitle(): string|null
     {
         return $this->title;
+    }
+
+    public function getRel(): string|null
+    {
+        return $this->rel;
     }
 }
