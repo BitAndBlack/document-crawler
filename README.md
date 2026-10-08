@@ -36,7 +36,7 @@ All those crawlers work the same — they need a [DomCrawler](https://symfony.co
 ```php
 <?php
 
-use BitAndBlack\DocumentCrawler\ContentCrawler\TitleCrawler;
+use BitAndBlack\DocumentCrawler\Crawler\TitleCrawler;
 use Symfony\Component\DomCrawler\Crawler;
 
 $document = <<<HTML
