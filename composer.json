@@ -1,8 +1,19 @@
 {
     "name": "bitandblack/document-crawler",
-    "description": "Extract different parts of an HTML or XML document.",
+    "description": "Extract titles, meta tags, images, anchors, headings, canonical URLs, structured data and more from HTML or XML documents, based on Symfony's DomCrawler.",
     "license": "MIT",
     "type": "library",
+    "keywords": [
+        "crawler",
+        "dom-crawler",
+        "html",
+        "json-ld",
+        "scraper",
+        "seo",
+        "structured-data",
+        "symfony",
+        "xml"
+    ],
     "authors": [
         {
             "name": "Tobias Köngeter",
@@ -10,6 +21,11 @@
             "homepage": "https://www.bitandblack.com"
         }
     ],
+    "homepage": "https://github.com/BitAndBlack/document-crawler",
+    "support": {
+        "issues": "https://github.com/BitAndBlack/document-crawler/issues",
+        "source": "https://github.com/BitAndBlack/document-crawler"
+    },
     "require": {
         "php": ">=8.2",
         "bitandblack/composer-helper": "^2.0",

@@ -1,4 +1,4 @@
-[![PHP from Packagist](https://img.shields.io/packagist/php-v/bitandblack/document-crawler)](http://www.php.net)
+[![PHP from Packagist](https://img.shields.io/packagist/php-v/bitandblack/document-crawler)](https://www.php.net)
 [![Latest Stable Version](https://poser.pugx.org/bitandblack/document-crawler/v/stable)](https://packagist.org/packages/bitandblack/document-crawler)
 [![Total Downloads](https://poser.pugx.org/bitandblack/document-crawler/downloads)](https://packagist.org/packages/bitandblack/document-crawler)
 [![License](https://poser.pugx.org/bitandblack/document-crawler/license)](https://packagist.org/packages/bitandblack/document-crawler)
@@ -11,17 +11,23 @@
 
 # Bit&Black Document Crawler
 
-Extract different parts of an HTML or XML document.
+Extract titles, meta tags, images, anchors, headings, canonical URLs, structured data and more from an HTML or XML document.
 
 ## Installation
 
-This library is made for the use with [Composer](https://packagist.org/packages/bitandblack/document-crawler). Add it to your project by running `$ composer require bitandblack/document-crawler`.
+This library is installed via [Composer](https://packagist.org/packages/bitandblack/document-crawler):
 
-## Usage 
+```
+composer require bitandblack/document-crawler
+```
 
-### Using Crawlers to extract parts of a document 
+It requires PHP 8.2 or higher.
 
-The *Bit&Black Document Crawler* library provides different crawlers, to extract information of a document. There are currently existing:
+## Usage
+
+### Using crawlers to extract parts of a document
+
+The *Bit&Black Document Crawler* library provides different crawlers to extract information from a document. The following crawlers are currently available:
 
 -   [**AnchorsCrawler**](./src/Crawler/AnchorsCrawler.php): Crawl and extract all defined anchors in a document, that have been declared with `<a href="...">...</a>`.
 -   [**CanonicalCrawler**](./src/Crawler/CanonicalCrawler.php): Crawl and extract the canonical URL of a document, that has been declared with `<link rel="canonical" href="..." />`.
@@ -66,9 +72,11 @@ echo $titleCrawler->getTitle();
 
 You can create a custom _Crawler_ by implementing the [CrawlerInterface](./src/Crawler/CrawlerInterface.php).
 
+All DTOs implement `JsonSerializable` and `Stringable`, so extracted results can be encoded or cast to string directly.
+
 ### Handling resources
 
-In same cases, resources are getting crawled, which you may want to handle in a specific way. To achieve this, each crawler makes use of a so-called _Resource Handler_. There are currently existing:
+In some cases, crawlers process external resources, which you may want to handle in a specific way. To achieve this, each crawler uses a so-called _Resource Handler_. The following resource handlers are currently available:
 
 -   The [FileSystemDownloadHandler](./src/ResourceHandler/FileSystemDownloadHandler.php): This one loads resources and writes them to the file system.
     There are different _Http Clients_ available to fetch resources:
@@ -83,7 +91,7 @@ You can create a custom _Resource Handler_ by implementing the [ResourceHandlerI
 
 ### Crawling everything at once
 
-In case you don't want to set up something, there is the [HolisticDocumentCrawler](./src/HolisticDocumentCrawler.php), that does all the work for you:
+In case you don't want to set up every crawler yourself, there is the [HolisticDocumentCrawler](./src/HolisticDocumentCrawler.php), that does all the work for you:
 
 ```php
 <?php
@@ -148,8 +156,10 @@ use BitAndBlack\DocumentCrawler\HolisticDocumentCrawler;
 $holisticDocumentCrawler = HolisticDocumentCrawler::createFromUrl('https://www.bitandblack.com');
 ```
 
+Runnable examples can be found in the [examples](./examples) directory. The list of notable changes is documented in the [CHANGELOG.md](./CHANGELOG.md).
+
 ## Help
 
-If you have any questions, feel free to contact us under `hello@bitandblack.com`.
+If you have any questions, feel free to contact us at `hello@bitandblack.com`.
 
 Further information about Bit&Black can be found under [www.bitandblack.com](https://www.bitandblack.com).
