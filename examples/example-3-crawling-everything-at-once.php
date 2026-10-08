@@ -19,34 +19,34 @@ require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPAR
 $holisticDocumentCrawler = HolisticDocumentCrawler::createFromUrl('https://www.bitandblack.com/de/impressum.html');
 
 // Get all links:
-dump($holisticDocumentCrawler->getLinkTags());
+echo json_encode($holisticDocumentCrawler->getLinkTags(), JSON_PRETTY_PRINT) . PHP_EOL;
 
 // Get all icons:
-dump($holisticDocumentCrawler->getIcons());
+echo json_encode($holisticDocumentCrawler->getIcons(), JSON_PRETTY_PRINT) . PHP_EOL;
 
 // Get all images:
-dump($holisticDocumentCrawler->getImages());
+echo json_encode($holisticDocumentCrawler->getImages(), JSON_PRETTY_PRINT) . PHP_EOL;
 
 // Get the language code:
-dump($holisticDocumentCrawler->getLanguageCode());
+echo json_encode($holisticDocumentCrawler->getLanguageCode(), JSON_PRETTY_PRINT) . PHP_EOL;
 
 // Get all meta tags:
-dump($holisticDocumentCrawler->getMetaTags());
+echo json_encode($holisticDocumentCrawler->getMetaTags(), JSON_PRETTY_PRINT) . PHP_EOL;
 
 // Get the title:
-dump($holisticDocumentCrawler->getTitle());
+echo json_encode($holisticDocumentCrawler->getTitle(), JSON_PRETTY_PRINT) . PHP_EOL;
 
 // Get all anchors:
-dump($holisticDocumentCrawler->getAnchors());
+echo json_encode($holisticDocumentCrawler->getAnchors(), JSON_PRETTY_PRINT) . PHP_EOL;
 
 // Get the canonical URL:
-dump($holisticDocumentCrawler->getCanonicalUrl());
+echo json_encode($holisticDocumentCrawler->getCanonicalUrl(), JSON_PRETTY_PRINT) . PHP_EOL;
 
 // Get all headings:
-dump($holisticDocumentCrawler->getHeadings());
+echo json_encode($holisticDocumentCrawler->getHeadings(), JSON_PRETTY_PRINT) . PHP_EOL;
 
 // Get all iframes:
-dump($holisticDocumentCrawler->getIframes());
+echo json_encode($holisticDocumentCrawler->getIframes(), JSON_PRETTY_PRINT) . PHP_EOL;
 
 // Get all structured data blocks:
-dump($holisticDocumentCrawler->getStructuredData());
+echo json_encode($holisticDocumentCrawler->getStructuredData(), JSON_PRETTY_PRINT) . PHP_EOL;

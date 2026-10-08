@@ -34,4 +34,4 @@ $titleCrawler = new TitleCrawler($crawler);
 $titleCrawler->crawlContent();
 
 // This will output `Test`.
-dump($titleCrawler->getTitle());
+echo json_encode($titleCrawler->getTitle()) . PHP_EOL;
