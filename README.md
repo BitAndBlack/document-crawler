@@ -23,6 +23,8 @@ composer require bitandblack/document-crawler
 
 It requires PHP 8.2 or higher.
 
+Downloading resources or using `HolisticDocumentCrawler::createFromUrl()` additionally requires a [PSR-18](https://www.php-fig.org/psr/psr-18/) HTTP client implementation in your project (for example [`symfony/http-client`](https://symfony.com/doc/current/http_client.html)) — the [HttpDiscoveryClient](./src/HttpClient/HttpDiscoveryClient.php) picks up whatever is installed.
+
 ## Usage
 
 ### Using crawlers to extract parts of a document
