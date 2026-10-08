@@ -70,11 +70,13 @@
     "scripts": {
         "phpstan": "php vendor/bin/phpstan analyse --configuration ./phpstan.neon --memory-limit=-1 --ansi",
         "phpunit": "php vendor/bin/phpunit --configuration ./phpunit.xml --colors=always",
+        "ecs": "php vendor/bin/ecs --ansi",
         "refactor": "php vendor/bin/rector && php vendor/bin/ecs --fix"
     },
     "scripts-descriptions": {
         "phpstan": "Runs PHPStan over the src folder and the tests folder.",
         "phpunit": "Runs PHPUnit.",
+        "ecs": "Checks the code style without changing files.",
         "refactor": "Runs tools to refactor the code."
     }
 }
