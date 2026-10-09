@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 All changes so far are additive — existing classes, constructors and `HolisticDocumentCrawler` wiring keep working.
 
-## [Unreleased]
+## 0.7.0 – 2026-10-09
 
 ### Added
 
@@ -65,9 +65,7 @@ All changes so far are additive — existing classes, constructors and `Holistic
 -   All files in `src/` declare `strict_types` now.
 -   CI: `actions/checkout@v4` and `actions/cache@v4`, the coding style check (ECS) runs in CI now via the new
     `composer ecs` script.
--   `.gitattributes`: `CHANGELOG.md` and `PROPOSALS-DOCUMENT-CRAWLER.md` get excluded from dist archives now;
-    stale entries (`bitbucket-pipelines.yml`, `devTools`) got removed.
+-   `.gitattributes`: `CHANGELOG.md` gets excluded from dist archives now; stale entries
+    (`bitbucket-pipelines.yml`, `devTools`) got removed.
 -   Examples print JSON instead of using `dump()`, so they can be copied into projects without
     `symfony/var-dumper`.
-
-[Unreleased]: https://github.com/BitAndBlack/document-crawler/compare/0.6.0...HEAD
