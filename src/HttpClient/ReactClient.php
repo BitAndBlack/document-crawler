@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Bit&Black Document Crawler.
  *
@@ -13,6 +15,7 @@ namespace BitAndBlack\DocumentCrawler\HttpClient;
 
 use BitAndBlack\Composer\Composer;
 use BitAndBlack\DocumentCrawler\DownloadItem\DownloadItem;
+use BitAndBlack\DocumentCrawler\DownloadItem\DownloadStatus;
 use BitAndBlack\DocumentCrawler\Exception;
 use BitAndBlack\DocumentCrawler\Exception\MissingDependencyException;
 use Fig\Http\Message\StatusCodeInterface;
@@ -67,30 +70,43 @@ readonly class ReactClient implements HttpClientInterface
 
     /**
      * Loads an external resource and stores it somewhere in the file system.
-     * This may happen asynchronously.
+     * The download runs in the background: the returned download item
+     * reflects the final status of the download, once it has finished.
      */
     public function download(string $src, string $cacheFile): DownloadItem
     {
-        $hasSuccess = true;
+        $downloadStatus = new DownloadStatus(
+            true,
+            [],
+        );
 
-        /** @var array<int, Throwable> $errors */
-        $errors = [];
+        $onFulFilled = function (ResponseInterface $response) use ($downloadStatus, $cacheFile): void {
+            $hasSuccess = $response->getStatusCode() < StatusCodeInterface::STATUS_BAD_REQUEST;
 
-        $onFulFilled = function (ResponseInterface $response) use (&$hasSuccess, $cacheFile): void {
-            if ($response->getStatusCode() >= StatusCodeInterface::STATUS_BAD_REQUEST) {
-                $hasSuccess = false;
-                return;
+            if (true === $hasSuccess) {
+                $hasSuccess = false !== file_put_contents(
+                    $cacheFile,
+                    (string) $response->getBody()
+                );
             }
 
-            $hasSuccess = false !== file_put_contents(
-                $cacheFile,
-                (string) $response->getBody()
-            );
+            $hasSuccess = $hasSuccess && file_exists($cacheFile);
+
+            /** @var array<int, Throwable> $errors */
+            $errors = [];
+
+            if (false === $hasSuccess) {
+                $errors[] = new Exception('Failed to download resource.');
+            }
+
+            $downloadStatus->update($hasSuccess, $errors);
         };
 
-        $onRejected = function (Throwable $error) use (&$hasSuccess, &$errors): void {
-            $errors[] = $error;
-            $hasSuccess = false;
+        $onRejected = function (Throwable $error) use ($downloadStatus): void {
+            $downloadStatus->update(
+                false,
+                [$error],
+            );
         };
 
         $this->browser
@@ -101,8 +117,9 @@ readonly class ReactClient implements HttpClientInterface
         return new DownloadItem(
             $src,
             $cacheFile,
-            $hasSuccess,
-            $errors,
+            true,
+            [],
+            $downloadStatus,
         );
     }
 }

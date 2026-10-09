@@ -23,8 +23,9 @@ readonly class DownloadItem implements DownloadItemInterface
     public function __construct(
         private string $src,
         private string $fileDownloaded,
-        private bool $hasSuccess,
-        private array $errors,
+        private bool $hasSuccess = false,
+        private array $errors = [],
+        private DownloadStatus|null $status = null,
     ) {
     }
 
@@ -43,11 +44,11 @@ readonly class DownloadItem implements DownloadItemInterface
      */
     public function getErrors(): array
     {
-        return $this->errors;
+        return $this->status?->getErrors() ?? $this->errors;
     }
 
     public function hasSuccess(): bool
     {
-        return $this->hasSuccess;
+        return $this->status?->hasSuccess() ?? $this->hasSuccess;
     }
 }

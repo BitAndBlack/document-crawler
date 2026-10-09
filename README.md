@@ -84,7 +84,7 @@ In some cases, crawlers process external resources, which you may want to handle
     There are different _Http Clients_ available to fetch resources:
 
     -   The [HttpDiscoveryClient](./src/HttpClient/HttpDiscoveryClient.php) is the default one and makes use of whatever library your project uses to download resources.
-    -   The [ReactClient](./src/HttpClient/ReactClient.php) needs the [`react/http`](https://github.com/reactphp/http) library and fetches resources asynchronously.
+    -   The [ReactClient](./src/HttpClient/ReactClient.php) needs the [`react/http`](https://github.com/reactphp/http) library and downloads resources asynchronously in the background: the downloads run in parallel and the returned download item reflects the final status of the download, once it has finished.
     -   You can — for sure — create a custom _Http Client_ by implementing the [HttpClientInterface](./src/HttpClient/HttpClientInterface.php).
 
 -   The [PassiveResourceHandler](./src/ResourceHandler/PassiveResourceHandler.php): This handler does nothing and is the default one.
